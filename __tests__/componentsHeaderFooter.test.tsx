@@ -1,7 +1,7 @@
 import '@testing-library/jest-dom'
 import { render, screen } from '@testing-library/react'
-import NavBar from '../app/components/nav-bar'
-import Footer from '@/app/components/footer';
+import NavBar from '../app/components/NavBar'
+import Footer from '@/app/components/Footer';
  
 describe('NavBar', () => {
   it('renders a link on the home icon', () => {

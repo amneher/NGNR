@@ -2,7 +2,7 @@
 // import Image from 'next/image'
 // import { authOptions } from './utils/auth';
 import { Article } from "./models/article";
-
+import ColumnPageContainer from "./components/ColumnPageContainer";
 import Card from "./components/Card";
 import { getArticlesByTag } from "./utils/loadData";
 
@@ -11,8 +11,7 @@ export default async function Home() {
   const homeItems: Article[] = await getArticlesByTag("HomeContent");
 
   return (
-    <main className="flex flex-col items-center justify-around my-12">
-      <div className="relative text-center place-self-center lg:max-w-5xl lg:w-full grid grid-cols-2">
+    <ColumnPageContainer columns={2}>
         {homeItems &&
           homeItems.map((item) => (
             <Card
@@ -28,7 +27,6 @@ export default async function Home() {
               actions={["homeLimit"]}
             />
           ))}
-      </div>
-    </main>
+    </ColumnPageContainer>
   );
 }

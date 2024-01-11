@@ -1,9 +1,9 @@
+import ColumnPageContainer from "../components/ColumnPageContainer";
 
 
 export default function AuthRoute() {
     return (
-        <div className="container mx-auto flex flex-row relative p-5">
-            <div className="basis-1/4"></div>
+        <ColumnPageContainer columns={1}>
         <div className="basis-1/2 rounded-box place-content-center card-bordered bg-slate-700 shadow-xl">
             <div className="card-body">
                 <h2 className="card-title justify-center">Log In</h2>
@@ -16,7 +16,6 @@ export default function AuthRoute() {
                 </div>
             </div>
         </div>
-        <div className="basis-1/4"></div>
-        </div>
+        </ColumnPageContainer>
     )
 }

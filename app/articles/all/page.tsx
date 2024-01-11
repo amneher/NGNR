@@ -1,13 +1,12 @@
 import Card from "@/app/components/Card";
 import { getAllArticles } from '@/app/utils/loadData';
-
+import ColumnPageContainer from "@/app/components/ColumnPageContainer";
 export default async function allArticles() {
     // get all articles
     const articles = await getAllArticles();
 
     return (
-        <div className="flex flex-col items-center justify-around my-12">
-        <div className="relative text-center place-self-center lg:max-w-5xl lg:w-full grid grid-cols-1">
+        <ColumnPageContainer columns={1}>
             {articles.map(article => {
                 return (
                     <div key={(article).id}>
@@ -25,7 +24,6 @@ export default async function allArticles() {
                     </div>
                 )
             })}
-        </div>
-        </div>
+        </ColumnPageContainer>
     )
 }
