@@ -1,6 +1,7 @@
 import prisma from "./db";
 import { Article, Tag } from "../models/article";
 import ObjectID from "bson-objectid";
+import { array } from "zod";
 
 export async function getAllArticles() {
   // gets all the articles, with related tags.
@@ -47,7 +48,7 @@ export async function getArticlesByTagID(tagID:string) {
     where: {
         tags: {
             some: {
-                id: `${tagID}`
+                id: tagID
             }
         }
     }
@@ -98,12 +99,12 @@ const buildArticle = async (item: {
 
   const article: Article = {
     id: item.id,
-    image: item.image ? item.image : undefined,
+    image: item.image ? item.image : null,
     title: item.title,
     createDate: item.createDate,
-    description: item.description ? item.description : undefined,
+    description: item.description ? item.description : null,
     content: item.content,
-    actions: item.actions ? item.actions : undefined,
+    actions: item.actions ? item.actions : null,
     tagIDs: item.tagIDs ? item.tagIDs : [],
     tags: tags,
   };

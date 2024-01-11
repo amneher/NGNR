@@ -1,14 +1,14 @@
 
 export interface Article {
     id: string,
-    image?: string,
+    image: string | null,
     title: string,
     createDate: Date,
-    description?: string,
+    description: string | null,
     content: string,
-    actions?: string[],
+    actions: string[] | null,
     tagIDs: string[],
-    tags?: Tag[]
+    tags: Tag[] | null
 }
 
 export interface Tag {
