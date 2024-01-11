@@ -1,5 +1,7 @@
 import prisma from "./db";
 import { Article, Tag } from "../models/article";
+import ObjectID from "bson-objectid";
+import { array } from "zod";
 
 export async function getAllArticles() {
   // gets all the articles, with related tags.
@@ -41,10 +43,28 @@ export async function getArticlesByTag(tag:string) {
   return articles;
 }
 
+export async function getArticlesByTagID(tagID:string) {
+  const items = await prisma.article.findMany({
+    where: {
+        tags: {
+            some: {
+                id: tagID
+            }
+        }
+    }
+  })
+  let articles: Article[] = [];
+  for (let index = 0; index < items.length; index++) {
+    const element = await buildArticle(items[index]);
+    articles.push(element)
+  }
+  return articles;
+}
+
 export async function getTag(id: string) {
   const tag = await prisma.tag.findFirstOrThrow({
     where: {
-      key: `${id}`
+      id: `${id}`
     }
   })
   return tag
@@ -79,21 +99,21 @@ const buildArticle = async (item: {
 
   const article: Article = {
     id: item.id,
-    image: item.image ? item.image : undefined,
+    image: item.image ? item.image : null,
     title: item.title,
     createDate: item.createDate,
-    description: item.description ? item.description : undefined,
+    description: item.description ? item.description : null,
     content: item.content,
-    actions: item.actions ? item.actions : undefined,
+    actions: item.actions ? item.actions : null,
     tagIDs: item.tagIDs ? item.tagIDs : [],
     tags: tags,
   };
   return article;
 };
 
-const buildTag = (item: {key: string, value: string, articleIDs?: string[]}) => {
+const buildTag = (item: {id: string, value: string, articleIDs?: string[]}) => {
   const tag: Tag = {
-    key: item.key,
+    id: item.id,
     value: item.value,
     articleIDs: item.articleIDs ? item.articleIDs : []
   }
