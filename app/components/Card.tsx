@@ -2,6 +2,7 @@ import Link from 'next/link'
 import React from 'react'
 import { Article } from '@/app/models/article'
 import Image from 'next/image'
+import Tag from '@/app/components/Tag'
 
 
 const Card = ({ id, image, title, description, createDate, content, actions, tagIDs, tags }: Article) => {
@@ -24,7 +25,7 @@ const Card = ({ id, image, title, description, createDate, content, actions, tag
                     <div className='divider'></div>
                     {contentTrunc ? <p className='text-md text-slate-400' aria-label={`contentTrunc-${id}`}>{content.substring(0, contentTrunc)}...</p> : <p className='text-md text-slate-400' aria-label={`contentFull-${id}`}>{content}</p>}<br />
                     {tags && tags.length ? 
-                        <div className="card-actions justify-center" aria-label={`withTags-${id}`}><h3 className="text-md opacity-50">Tags:</h3>{tags.map(tag => {return <h3 className="text-md opacity-50" key={tag.key}>{tag.value}</h3>})}</div> 
+                        <div className="card-actions justify-center" aria-label={`withTags-${id}`}><h3 className="text-md opacity-50">Tags:</h3>{tags.map(tag => {return <Tag key={tag.id} id={tag.id} value={tag.value} articleIDs={tag.articleIDs} />})}</div> 
                         : <div className="card-actions justify-center" aria-label={`withoutTags-${id}`}><h3 className="text-md opacity-50">Tags: N/A</h3></div>}
                 </div>
             </Link>

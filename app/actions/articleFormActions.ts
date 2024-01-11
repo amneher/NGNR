@@ -5,6 +5,7 @@ import prisma from "@/app/utils/db";
 import { z } from "zod";
 import { redirect } from "next/navigation";
 import { getArticle } from "@/app/utils/loadData";
+import { Tag } from "@/app/models/article";
 
 export async function CreateArticle(formData: FormData) {
   const schema = z.object({
@@ -41,24 +42,54 @@ export async function CreateArticle(formData: FormData) {
       content: data.content,
     },
   });
-  const tagList = tags.map((tag) => {
+  let tagsToCreate: string[] = [];
+  let existingTags: Tag[] = [];
+  async () => {
+    let tagsFound = [];
+    for (let index = 0; index < tags.length; index++) {
+      const element = tags[index];
+      const tag = await prisma.tag.findRaw({
+        filter: {
+          value: element
+        }
+      })
+      if (tag) {
+        tagsFound.push(tag)
+      } else {
+        tagsToCreate.push(element)
+      }
+    }
+    return tagsFound;
+  }
+
+  const tagList = tagsToCreate.map((tag) => {
     return {
-      key: new ObjectID().toHexString(),
+      id: new ObjectID().toHexString(),
       value: tag,
       articleIDs: [articleID],
     };
   });
-  await prisma.tag.createMany({
+
+  if (tagList) {await prisma.tag.createMany({
     data: tagList,
-  });
+  })};
+  
   const article = await getArticle(articleID);
-  const tagIDs = tagList.map((tag) => {
-    return tag.key;
+  
+  let tagIDs = tagList.map((tag) => {
+    return tag.id;
   });
+  
+  for (let index = 0; index < existingTags.length; index++) {
+    const element = existingTags[index];
+    tagIDs.push(element.id)
+  }
+  
   for (let index = 0; index < tagIDs.length; index++) {
     const tagID = tagIDs[index];
     article.tagIDs.push(tagID);
   }
+  
   const updateArticleTagIDs = await prisma.article.update({
     where: {
       id: article.id,
@@ -67,7 +98,9 @@ export async function CreateArticle(formData: FormData) {
       tagIDs: article.tagIDs,
     },
   });
+
   console.log(updateArticleTagIDs);
+  
   if (result.id) {
     return redirect("/");
   }

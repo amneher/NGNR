@@ -12,7 +12,7 @@ export interface Article {
 }
 
 export interface Tag {
-    key: string,
+    id: string,
     value: string,
     articleIDs: string[]
 }

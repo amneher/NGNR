@@ -19,11 +19,11 @@ model Article {
   content            String
   actions            String[]
   tagIDs             String[] @db.ObjectId
-  tags               Tag[]  @relation(fields: [tagIDs], references: [key])
+  tags               Tag[]  @relation(fields: [tagIDs], references: [id])
 }
 
 model Tag {
-  key                String @id @map("_id") @db.ObjectId
+  id                String @id @map("_id") @db.ObjectId
   value              String
   articleIDs         String[] @db.ObjectId
   articles           Article[]   @relation(fields: [articleIDs], references: [id])
