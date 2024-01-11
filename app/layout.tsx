@@ -1,8 +1,8 @@
 import type { Metadata } from 'next'
 import { GeistSans } from 'geist/font/sans';
-import './globals.css';
-import NavBar from './components/NavBar';
-import Footer from './components/Footer';
+import '@/app/globals.css';
+import NavBar from '@/app/components/NavBar';
+import Footer from '@/app/components/Footer';
 
 let title = 'NGNR';
 let description = 'Join Me On My Learning Journey';

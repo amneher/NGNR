@@ -1,6 +1,6 @@
 import Link from 'next/link'
 import React from 'react'
-import { Article } from '../models/article'
+import { Article } from '@/app/models/article'
 import Image from 'next/image'
 
 

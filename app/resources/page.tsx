@@ -1,4 +1,4 @@
-import ColumnPageContainer from "../components/ColumnPageContainer";
+import ColumnPageContainer from "@/app/components/ColumnPageContainer";
 
 
 export default async function resourcePage() {

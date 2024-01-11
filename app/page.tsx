@@ -1,10 +1,10 @@
 // import { getServerSession } from 'next-auth'
 // import Image from 'next/image'
 // import { authOptions } from './utils/auth';
-import { Article } from "./models/article";
-import ColumnPageContainer from "./components/ColumnPageContainer";
-import Card from "./components/Card";
-import { getArticlesByTag } from "./utils/loadData";
+import { Article } from "@/app/models/article";
+import ColumnPageContainer from "@/app/components/ColumnPageContainer";
+import Card from "@/app/components/Card";
+import { getArticlesByTag } from "@/app/utils/loadData";
 
 export default async function Home() {
   // const session = await getServerSession(authOptions);
