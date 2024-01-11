@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { searchAction } from '@/app/actions/searchActions';
+import SearchBox from "@/app/components/SearchBox";
 
 const NavBar = () => {
   return (
@@ -86,15 +86,10 @@ const NavBar = () => {
       <div className="navbar-end" aria-label="navbar-end">
         <div className="form-control mr-2">
           {/* can't use formAction with this input type. Need to add a button or something... */}
-          <input
-            type="text"
-            name="search"
-            aria-label="search-box"
-            placeholder="Search"
-            className="input input-bordered w-auto rounded-full"
-          />
+          <SearchBox />
         </div>
-        {/* <div className="dropdown dropdown-end">
+        {/* I'll reactivate this if/when I decide to implement user accounts.
+        <div className="dropdown dropdown-end">
           <div tabIndex={0} role="button" className="btn btn-ghost btn-circle avatar">
             <div className="w-10 rounded-full">
               <img alt="A Profile Photo" src="https://avatars.githubusercontent.com/u/5522819?v=4" />
