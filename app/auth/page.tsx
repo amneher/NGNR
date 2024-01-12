@@ -1,4 +1,6 @@
 import ColumnPageContainer from "@/app/components/ColumnPageContainer";
+import EmailLogIn from "@/app/components/EmailLogIn";
+import GithubLogIn from "../components/GithubLogIn";
 
 
 export default function AuthRoute() {
@@ -8,11 +10,11 @@ export default function AuthRoute() {
             <div className="card-body">
                 <h2 className="card-title justify-center">Log In</h2>
                 <div className="card-actions p-4 place-content-center">
-                    <button className="btn btn-primary">Log In With GitHub</button>
+                    <GithubLogIn />
                 </div>
                 <div className="card-actions p-4 place-content-center">
-                    <input type="text" placeholder="Email" className="input input-bordered w-full max-w-xs" />
-                    <button className="btn btn-primary">Send Magic Link</button>
+                    <input type="text" placeholder="Email" name="email" className="input input-bordered w-full max-w-xs" />
+                    <EmailLogIn />
                 </div>
             </div>
         </div>
