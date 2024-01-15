@@ -21,17 +21,17 @@ const mockArticleBuilder = () => {
     }
     mockTags = [
         {
-            key: mockTagIDs[0],
+            id: mockTagIDs[0],
             value: "TestTag1",
             articleIDs: [mockArticle.id]
         },
         {
-            key: mockTagIDs[1],
+            id: mockTagIDs[1],
             value: "TestTag2",
             articleIDs: [mockArticle.id]
         },
         {
-            key: mockTagIDs[2],
+            id: mockTagIDs[2],
             value: "TestTag3",
             articleIDs: [mockArticle.id]
         }
