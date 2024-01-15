@@ -1,7 +1,7 @@
 
 # This is my personal site
 
-## There are many like it, but this one is mine
+## It consists of a blog, my CV, and a page of handy resources
 
 ## Stack
 
@@ -11,6 +11,7 @@
 - DaisyUI
 - Prisma ORM
 - MongoDB
+- Next-Auth
 - Jest
 - Storybook
 

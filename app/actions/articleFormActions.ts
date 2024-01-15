@@ -45,22 +45,20 @@ export async function CreateArticle(formData: FormData) {
   let tagsToCreate: string[] = [];
   let existingTags: Tag[] = [];
   async () => {
-    let tagsFound = [];
     for (let index = 0; index < tags.length; index++) {
       const element = tags[index];
-      const tag = await prisma.tag.findRaw({
-        filter: {
-          value: element
-        }
-      })
+      const tag = await prisma.tag.findFirst({
+        where: {
+          value: element,
+        },
+      });
       if (tag) {
-        tagsFound.push(tag)
+        existingTags.push(tag);
       } else {
-        tagsToCreate.push(element)
+        tagsToCreate.push(element);
       }
     }
-    return tagsFound;
-  }
+  };
 
   const tagList = tagsToCreate.map((tag) => {
     return {
@@ -70,26 +68,28 @@ export async function CreateArticle(formData: FormData) {
     };
   });
 
-  if (tagList) {await prisma.tag.createMany({
-    data: tagList,
-  })};
-  
+  if (tagList) {
+    await prisma.tag.createMany({
+      data: tagList,
+    });
+  }
+
   const article = await getArticle(articleID);
-  
+
   let tagIDs = tagList.map((tag) => {
     return tag.id;
   });
-  
+
   for (let index = 0; index < existingTags.length; index++) {
     const element = existingTags[index];
-    tagIDs.push(element.id)
+    tagIDs.push(element.id);
   }
-  
+
   for (let index = 0; index < tagIDs.length; index++) {
     const tagID = tagIDs[index];
     article.tagIDs.push(tagID);
   }
-  
+
   const updateArticleTagIDs = await prisma.article.update({
     where: {
       id: article.id,
@@ -100,8 +100,10 @@ export async function CreateArticle(formData: FormData) {
   });
 
   console.log(updateArticleTagIDs);
-  
+
   if (result.id) {
     return redirect("/");
+  } else {
+    return redirect("#")
   }
 }
