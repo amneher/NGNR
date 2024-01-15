@@ -5,7 +5,7 @@ import prisma from "@/app/utils/db";
 import { z } from "zod";
 import { redirect } from "next/navigation";
 import { getArticle } from "@/app/utils/loadData";
-import { Tag } from "@/app/models/article";
+import { Article, Tag } from "@/app/models/article";
 
 export async function CreateArticle(formData: FormData) {
   const schema = z.object({
@@ -30,9 +30,8 @@ export async function CreateArticle(formData: FormData) {
   }
 
   const data = parse.data;
-  const tags = data.tags.split("; ");
   const articleID = new ObjectID().toHexString();
-  const result = await prisma.article.create({
+  await prisma.article.create({
     data: {
       id: articleID,
       image: data.image,
@@ -42,25 +41,51 @@ export async function CreateArticle(formData: FormData) {
       content: data.content,
     },
   });
+
+  const { tagsToCreate, existingTags } = await sortTags(data.tags)
+
+  for (let index = 0; index < existingTags.length; index++) {
+    const element = existingTags[index];
+    await updateTagArticleIDs(element, [articleID])
+  }
+
+  const tagList = await newTags(tagsToCreate, articleID)
+
+  const article = await getArticle(articleID);
+
+  const result = await updateArticleTagIDs(tagList, existingTags, article)
+
+  console.log(result);
+
+  if (result.id) {
+    return redirect("/");
+  } else {
+    return redirect("#")
+  }
+}
+
+const sortTags = async (tags: string) => {
+  const tagList = tags.split("; ")
   let tagsToCreate: string[] = [];
   let existingTags: Tag[] = [];
-  async () => {
-    for (let index = 0; index < tags.length; index++) {
-      const element = tags[index];
-      const tag = await prisma.tag.findFirst({
-        where: {
-          value: element,
-        },
-      });
-      if (tag) {
-        existingTags.push(tag);
-      } else {
-        tagsToCreate.push(element);
-      }
+  for (let index = 0; index < tagList.length; index++) {
+    const element = tagList[index];
+    const tag = await prisma.tag.findFirst({
+      where: {
+        value: element,
+      },
+    });
+    if (tag) {
+      existingTags.push(tag);
+    } else {
+      tagsToCreate.push(element);
     }
-  };
+  }
+  return { "tagsToCreate": tagsToCreate, "existingTags": existingTags }
+}
 
-  const tagList = tagsToCreate.map((tag) => {
+const newTags = async (tagsToCreate: string[], articleID: string) => {
+  const tagList = tagsToCreate.map(tag => {
     return {
       id: new ObjectID().toHexString(),
       value: tag,
@@ -68,42 +93,56 @@ export async function CreateArticle(formData: FormData) {
     };
   });
 
-  if (tagList) {
+  if (tagList.length > 0) {
     await prisma.tag.createMany({
       data: tagList,
     });
   }
+  return tagList;
+}
 
-  const article = await getArticle(articleID);
+const updateArticleTagIDs = async (tagList: Tag[], existingTags: Tag[], article: Article) => {
+  let tagIDs = [];
 
-  let tagIDs = tagList.map((tag) => {
-    return tag.id;
-  });
+  for (let index = 0; index < tagList.length; index++) {
+    const element = tagList[index];
+    tagIDs.push(element.id)    
+  }
 
   for (let index = 0; index < existingTags.length; index++) {
     const element = existingTags[index];
     tagIDs.push(element.id);
   }
 
-  for (let index = 0; index < tagIDs.length; index++) {
-    const tagID = tagIDs[index];
-    article.tagIDs.push(tagID);
+  for (let index = 0; index < article.tagIDs.length; index++) {
+    const tagID = article.tagIDs[index];
+    tagIDs.push(tagID);
   }
 
-  const updateArticleTagIDs = await prisma.article.update({
+  const result = await prisma.article.update({
     where: {
       id: article.id,
     },
     data: {
-      tagIDs: article.tagIDs,
+      tagIDs: tagIDs,
     },
   });
+  return result
+}
 
-  console.log(updateArticleTagIDs);
-
-  if (result.id) {
-    return redirect("/");
-  } else {
-    return redirect("#")
+const updateTagArticleIDs = async (tag: Tag, articleIDs: string[]) => {
+  let allIDs = tag.articleIDs;
+  for (let index = 0; index < articleIDs.length; index++) {
+    const element = articleIDs[index];
+    allIDs.push(element)    
   }
+  const result = await prisma.tag.update({
+    where: {
+      id: tag.id
+    },
+    data: {
+      articleIDs: allIDs
+    }
+  })
+  return result;
 }

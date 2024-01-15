@@ -3,6 +3,7 @@ import React from 'react'
 import { Article } from '@/app/models/article'
 import Image from 'next/image'
 import Tag from '@/app/components/Tag'
+import ReactMarkdown from 'react-markdown'
 
 
 const Card = ({ id, image, title, description, createDate, content, actions, tagIDs, tags }: Article) => {
@@ -23,7 +24,7 @@ const Card = ({ id, image, title, description, createDate, content, actions, tag
                     {description ? <h3 className="text-sm opacity-50" aria-label={`description-${id}`}>{description}</h3> : <span aria-label={`noDescription-${id}`}></span>}
                     <h3 className="text-sm opacity-50" aria-label={`createDate-${id}`}>{createDate.toDateString()}</h3>
                     <div className='divider'></div>
-                    {contentTrunc ? <p className='text-md text-slate-400' aria-label={`contentTrunc-${id}`}>{content.substring(0, contentTrunc)}...</p> : <p className='text-md text-slate-400' aria-label={`contentFull-${id}`}>{content}</p>}<br />
+                    {contentTrunc ? <ReactMarkdown className='text-md text-slate-400' aria-label={`contentTrunc-${id}`}>{String(content.substring(0, contentTrunc))}</ReactMarkdown> : <ReactMarkdown className='text-md text-slate-400' aria-label={`contentFull-${id}`}>{content}</ReactMarkdown>}<br />
                     {tags && tags.length ? 
                         <div className="card-actions justify-center" aria-label={`withTags-${id}`}><h3 className="text-md opacity-50">Tags:</h3>{tags.map(tag => {return <Tag key={tag.id} id={tag.id} value={tag.value} articleIDs={tag.articleIDs} />})}</div> 
                         : <div className="card-actions justify-center" aria-label={`withoutTags-${id}`}><h3 className="text-md opacity-50">Tags: N/A</h3></div>}

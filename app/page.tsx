@@ -4,11 +4,11 @@
 import { Article } from "./models/article";
 import ColumnPageContainer from "./components/ColumnPageContainer";
 import Card from "./components/Card";
-import { getArticlesByTag } from "./utils/loadData";
+import { getHomeArticles } from "./utils/loadData";
 
 export default async function Home() {
   // const session = await getServerSession(authOptions);
-  const homeItems: Article[] = await getArticlesByTag("HomeContent");
+  const homeItems: Article[] = await getHomeArticles();
 
   return (
     <ColumnPageContainer columns={2}>

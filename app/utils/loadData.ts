@@ -14,6 +14,25 @@ export async function getAllArticles() {
   return articles;
 }
 
+export async function getHomeArticles() {
+  // gets all the articles, with related tags.
+  const articleQuery = await prisma.article.findMany({
+    where: {
+      tags: {
+        some: {
+          value: "HomeContent"
+        }
+      }
+    }
+  });
+  let articles: Article[] = [];
+  for (let index = 0; index < articleQuery.length; index++) {
+    const element = await buildArticle(articleQuery[index]);
+    articles.push(element)
+  }
+  return articles;
+}
+
 export async function getArticle(id: string) {
   // get an article by id from the database and return it as an Article.
   const item = await prisma.article.findFirstOrThrow({
@@ -25,14 +44,14 @@ export async function getArticle(id: string) {
   return article;
 }
 
-export async function getArticlesByTag(tag:string) {
+export async function getArticlesByTag(tag: string) {
   const items = await prisma.article.findMany({
     where: {
-        tags: {
-            some: {
-                value: `${tag}`
-            }
+      tags: {
+        some: {
+          value: `${tag}`
         }
+      }
     }
   })
   let articles: Article[] = [];
@@ -43,14 +62,14 @@ export async function getArticlesByTag(tag:string) {
   return articles;
 }
 
-export async function getArticlesByTagID(tagID:string) {
+export async function getArticlesByTagID(tagID: string) {
   const items = await prisma.article.findMany({
     where: {
-        tags: {
-            some: {
-                id: tagID
-            }
+      tags: {
+        some: {
+          id: tagID
         }
+      }
     }
   })
   let articles: Article[] = [];
@@ -111,7 +130,7 @@ const buildArticle = async (item: {
   return article;
 };
 
-const buildTag = (item: {id: string, value: string, articleIDs?: string[]}) => {
+const buildTag = (item: { id: string, value: string, articleIDs?: string[] }) => {
   const tag: Tag = {
     id: item.id,
     value: item.value,
