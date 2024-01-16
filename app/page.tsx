@@ -4,11 +4,16 @@
 import { Article } from "./models/article";
 import ColumnPageContainer from "./components/ColumnPageContainer";
 import Card from "./components/Card";
-import { getHomeArticles } from "./utils/loadData";
+import { fetchArticlePages, getHomeArticles } from "./utils/loadData";
+import Pagination from "./components/Pagination";
 
-export default async function Home() {
+export default async function Home({ searchParams, }: { searchParams?: { query?: string; page?: string;}}) {
   // const session = await getServerSession(authOptions);
   const homeItems: Article[] = await getHomeArticles();
+
+  const query: string = searchParams?.query || '';
+  const currentPage: number = Number(searchParams?.page) || 1;
+  const totalPages: number = await fetchArticlePages(query)
 
   return (
     <ColumnPageContainer columns={2}>
@@ -27,6 +32,9 @@ export default async function Home() {
               actions={["homeLimit"]}
             />
           ))}
+      <div className="place-self-center mt-4">
+        <Pagination totalPages={totalPages} />
+      </div>
     </ColumnPageContainer>
   );
 }

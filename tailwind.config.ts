@@ -23,6 +23,7 @@ export default {
     hoverOnlyWhenSupported: true,
   },
   plugins: [
+    require("@tailwindcss/typography"),
     require("daisyui"), 
     require("@tailwindcss/forms")
   ],

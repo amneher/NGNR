@@ -1,7 +1,32 @@
+'use client'
+
 import Link from "next/link";
 import SearchBox from "@/app/components/SearchBox";
+import { usePathname } from "next/navigation";
+import clsx from "clsx";
 
 const NavBar = () => {
+  const path = usePathname();
+
+  // move these in the future...
+  const links = [
+    {
+      "name": "Posts",
+      "href": "/articles",
+      "label": "posts"
+    },
+    {
+      "name": "My CV",
+      "href": "/resume/current",
+      "label": "cv"
+    },
+    {
+      "name": "Resources",
+      "href": "/resources",
+      "label": "resources"
+    }
+  ]
+
   return (
     <div className="navbar bg-slate-700 md:flex gap-2 rounded-full" aria-label="navbar-container">
       <div className="navbar-start" aria-label="navbar-start">
@@ -53,7 +78,7 @@ const NavBar = () => {
               <Link href="/" aria-label="dropdown-home">Home</Link>
             </li>
             <li>
-              <Link href="/articles/all" aria-label="dropdown-posts">Posts</Link>
+              <Link href="/articles" aria-label="dropdown-posts">Posts</Link>
             </li>
             <li>
               <Link href="/resume/current" aria-label="dropdown-cv">My CV</Link>
@@ -66,27 +91,23 @@ const NavBar = () => {
       </div>
       <div className="navbar-center flex" aria-label="navbar-center">
         <ul className="menu md:menu-horizontal md:px-2 max-md:hidden">
-          <li>
-            <Link href="/articles/all" aria-label="posts">
-              <h2 className={`m-2 text-1xl font-semibold`}>Posts</h2>
+          {links.map(link => {
+            return (
+              <li key={link.label}>
+            <Link href={link.href} aria-label={link.label}>
+              <h2 className={clsx(`m-2 text-1xl font-semibold`,
+                {
+                  'underline underline-offset-8': path === link.href,
+                }, )}>{link.name}</h2>
             </Link>
           </li>
-          <li>
-            <Link href="/resume/current" aria-label="cv">
-              <h2 className={`m-2 text-1xl font-semibold`}>My CV</h2>
-            </Link>
-          </li>
-          <li>
-            <Link href="/resources" aria-label="resources">
-              <h2 className={`m-2 text-1xl font-semibold`}>Resources</h2>
-            </Link>
-          </li>
+            )
+          })}
         </ul>
       </div>
       <div className="navbar-end" aria-label="navbar-end">
         <div className="form-control mr-2">
-          {/* can't use formAction with this input type. Need to add a button or something... */}
-          <SearchBox />
+          <SearchBox placeholder="Search"/>
         </div>
         {/* I'll reactivate this if/when I decide to implement user accounts.
         <div className="dropdown dropdown-end">
