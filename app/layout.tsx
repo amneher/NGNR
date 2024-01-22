@@ -1,8 +1,19 @@
 import type { Metadata } from 'next'
-import { GeistSans } from 'geist/font/sans';
+import { Chivo_Mono, MuseoModerno } from "next/font/google";
 import './globals.css';
 import NavBar from './components/NavBar';
 import Footer from './components/Footer';
+
+const chivoMono = Chivo_Mono({
+  subsets: ["latin"],
+  display: 'swap',
+  variable: '--font-chivo-mono'
+})
+const moderno = MuseoModerno({
+  subsets: ["latin"],
+  display: 'swap',
+  variable: '--font-moderno',
+});
 
 let title = 'NGNR';
 let description = 'Join Me On My Learning Journey';
@@ -24,8 +35,8 @@ export default function RootLayout({
   children: React.ReactNode
 }) {
   return (
-    <html data-theme="night" lang="en">
-      <body className={GeistSans.variable}>
+    <html data-theme="retro" lang="en" className={`${moderno.variable} ${chivoMono.variable}`}>
+      <body className={`bg-base-100 dark:bg-stone-500 text-neutral dark:text-neutral-content`}>
         <NavBar />
         {children}
         <Footer />

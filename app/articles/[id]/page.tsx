@@ -11,7 +11,7 @@ const ArticlePage = async ({ params: { id }}: Props) => {
 
   return (
     <ColumnPageContainer columns={1}>
-      <Card id={article.id} title={article.title} image={article.image} description={article.description} createDate={article.createDate} content={article.content} tagIDs={article.tagIDs} actions={article.actions} tags={article.tags}/>
+      <Card id={article.id} title={article.title} slug={article.slug} image={article.image} description={article.description} createDate={article.createDate} content={article.content} tagIDs={article.tagIDs} actions={article.actions} tags={article.tags}/>
     </ColumnPageContainer>
   )
 }

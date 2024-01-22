@@ -14,6 +14,7 @@ model Article {
   id                 String @id @map("_id") @db.ObjectId
   image              String?
   title              String
+  slug               String @unique
   createDate         DateTime @default(now())
   description        String?
   content            String

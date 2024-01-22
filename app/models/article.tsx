@@ -3,6 +3,7 @@ export interface Article {
     id: string,
     image: string | null,
     title: string,
+    slug: string,
     createDate: Date,
     description: string | null,
     content: string,

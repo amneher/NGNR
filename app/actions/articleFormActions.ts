@@ -11,6 +11,7 @@ export async function CreateArticle(formData: FormData) {
   const schema = z.object({
     image: z.string(),
     title: z.string().min(1),
+    slug: z.string().min(5),
     createDate: z.string().min(1),
     description: z.string(),
     content: z.string().min(1),
@@ -19,6 +20,7 @@ export async function CreateArticle(formData: FormData) {
   const parse = schema.safeParse({
     image: formData.get("image"),
     title: formData.get("title"),
+    slug: formData.get("slug"),
     createDate: new Date().toISOString(),
     description: formData.get("description"),
     content: formData.get("content"),
@@ -30,12 +32,17 @@ export async function CreateArticle(formData: FormData) {
   }
 
   const data = parse.data;
+
+  console.log(data)
+  return null
   const articleID = new ObjectID().toHexString();
+  const slug = data.slug ? data.slug : data.title.toLowerCase().split(" ").join("-")
   await prisma.article.create({
     data: {
       id: articleID,
       image: data.image,
       title: data.title,
+      slug: slug,
       createDate: data.createDate,
       description: data.description,
       content: data.content,

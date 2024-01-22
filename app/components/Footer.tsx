@@ -4,11 +4,11 @@ import React from "react";
 const Footer = () => {
   return (
     <footer
-      className="footer flex p-10 bg-slate-800 text-base-content inset-x-0 bottom-0 place-content-center"
+      className="footer flex p-10 bg-secondary dark:bg-neutral text-secondary-content dark:text-neutral-content inset-x-0 bottom-0 place-content-center"
       aria-label="footer-container"
     >
       <aside aria-label="footer-branding">
-        <div className="invert-[.80]" aria-label="footer-logo">
+        <div className="fill-secondary-content dark:fill-neutral-content" aria-label="footer-logo">
           <svg
             width="60"
             height="60"
@@ -25,7 +25,7 @@ const Footer = () => {
           </svg>
         </div>
         <p>
-          NGNR.com
+          NGNR . US
           <br />
           All I know is but a fistful of straw.
         </p>

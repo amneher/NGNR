@@ -28,9 +28,9 @@ const NavBar = () => {
   ]
 
   return (
-    <div className="navbar bg-slate-700 md:flex gap-2 rounded-full" aria-label="navbar-container">
+    <div className="navbar bg-secondary dark:bg-neutral text-secondary-content dark:text-neutral-content md:flex gap-2 rounded-full" aria-label="navbar-container">
       <div className="navbar-start" aria-label="navbar-start">
-        <Link aria-label="homeIcon" href="/" className="max-md:hidden invert-[.80] ml-2">
+        <Link aria-label="homeIcon" href="/" className="max-md:hidden fill-secondary-content dark:fill-neutral-content ml-2">
           <svg
             width="60"
             height="60"
@@ -46,14 +46,14 @@ const NavBar = () => {
             </g>
           </svg>
         </Link>
-        <h2 className="mb-2 ml-3 text-2xl font-semibold max-md:hidden">NGNR</h2>
+        <h2 className="mb-2 ml-6 text-2xl font-mono space-x-4 max-md:hidden">NGNR</h2>
         <div className="dropdown dropdown-start md:hidden">
           <div
             tabIndex={0}
             role="button"
             className="btn btn-ghost btn-circle avatar m-2"
           >
-            <div className="w-14 rounded-full p-2 invert-[.80]">
+            <div className="w-14 rounded-full p-2 fill-neutral dark:fill-neutral-content">
               <svg
                 width="30"
                 height="30"
@@ -72,7 +72,7 @@ const NavBar = () => {
           </div>
           <ul
             tabIndex={0}
-            className="mt-3 z-[1] p-2 shadow menu menu-sm dropdown-content bg-slate-600 rounded-box w-52"
+            className="mt-3 z-[1] p-2 shadow menu menu-sm dropdown-content bg-accent text-accent-content dark:bg-neutral dark:text-neutral-content rounded-box w-52"
           >
             <li>
               <Link href="/" aria-label="dropdown-home">Home</Link>
@@ -97,7 +97,7 @@ const NavBar = () => {
             <Link href={link.href} aria-label={link.label}>
               <h2 className={clsx(`m-2 text-1xl font-semibold`,
                 {
-                  'underline underline-offset-8': path === link.href,
+                  'underline underline-offset-8 text-secondary-content dark:text-stone-400': path === link.href,
                 }, )}>{link.name}</h2>
             </Link>
           </li>

@@ -18,6 +18,12 @@ export default {
         "2xl": "6rem",
       },
     },
+    extend: {
+      fontFamily: {
+        sans: ['var(--font-moderno)'],
+        mono: ['var(--font-chivo-mono)'],
+      },
+    },
   },
   future: {
     hoverOnlyWhenSupported: true,
@@ -28,6 +34,6 @@ export default {
     require("@tailwindcss/forms")
   ],
   daisyui: {
-    themes: ["light", "dark", "night", "winter"],
+    themes: ["light", "retro", "dim"],
   },
 } satisfies Config;
