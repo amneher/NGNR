@@ -1,9 +1,11 @@
 'use client'
 
 import Link from "next/link";
+import { ErrorBoundary } from "react-error-boundary";
 import SearchBox from "@/app/components/SearchBox";
 import { usePathname } from "next/navigation";
 import clsx from "clsx";
+import { logError } from "../utils/helpers";
 
 const NavBar = () => {
   const path = usePathname();
@@ -107,7 +109,9 @@ const NavBar = () => {
       </div>
       <div className="navbar-end" aria-label="navbar-end">
         <div className="form-control mr-2">
-          <SearchBox placeholder="Search"/>
+          <ErrorBoundary fallback={<div className="relative flex flex-1 flex-shrink-0"></div>}>
+            <SearchBox placeholder="Search"/>
+          </ErrorBoundary>
         </div>
         {/* I'll reactivate this if/when I decide to implement user accounts.
         <div className="dropdown dropdown-end">

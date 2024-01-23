@@ -5,7 +5,7 @@ import Image from 'next/image'
 import Tag from '@/app/components/Tag'
 
 
-const Card = ({ id, image, title, description, createDate, content, actions, tagIDs, tags }: Article) => {
+const Card = ({ id, image, title, slug, description, createDate, content, actions, tagIDs, tags }: Article) => {
     const default_width = "320"
     const default_height = "320"
 
@@ -16,7 +16,7 @@ const Card = ({ id, image, title, description, createDate, content, actions, tag
 
     return (
         <div className="card bg-base-100 dark:bg-neutral text-neutral dark:text-neutral-content rounded-box border border-transparent shadow-lg px-5 py-4 m-2 hover:shadow-slate-950" id={id} aria-label={`card-${id}`} >
-            <Link href={`/articles/${id}`} aria-label={`main-${id}-link`}>
+            <Link href={`/articles/${slug}`} aria-label={`main-${id}-link`}>
                 {image ? <figure><Image src={image} alt="Album" width={default_width} height={default_height} className='object-scale-down' aria-label={`image-${id}`} /></figure> : <span aria-label={`noImage-${id}`}></span>}
                 <div className="card-body" aria-label={`body-${id}`}>
                     <h2 className="card-title font-semibold justify-center text-neutral dark:text-neutral-content" aria-label={`title-${id}`}>{title}</h2>
