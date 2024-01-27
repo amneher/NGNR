@@ -1,8 +1,7 @@
-
-
 export interface ResourceItem {
-    id: string
-    link: string | null
-    title: string
-    content: string
+  id: string;
+  link: string | null;
+  createDate: Date;
+  title: string;
+  content: string;
 }

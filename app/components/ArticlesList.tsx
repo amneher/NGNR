@@ -11,7 +11,7 @@ export default async function ArticlesList({ query, currentPage }: {query: strin
         <Suspense fallback={<Loading />}>
         {articles.map(article => {
             return (
-                <div key={(article).id}>
+                <div key={(article).slug}>
                     <Card
                         id={article.id}
                         image={article.image}

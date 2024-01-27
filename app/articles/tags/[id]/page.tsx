@@ -19,6 +19,7 @@ export default async function TagArticlesPage({ params: { id } }: Props) {
               id={article.id}
               image={article.image}
               title={article.title}
+              slug={article.slug}
               description={article.description}
               createDate={article.createDate}
               content={article.content}

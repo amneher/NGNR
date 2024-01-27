@@ -6,8 +6,8 @@ import Tag from '@/app/components/Tag'
 
 
 const Card = ({ id, image, title, slug, description, createDate, content, actions, tagIDs, tags }: Article) => {
-    const default_width = "320"
-    const default_height = "320"
+    const default_width = "420"
+    const default_height = "420"
 
     let contentTrunc;
     if (actions && actions.find(x => x === 'homeLimit')) {
@@ -15,7 +15,7 @@ const Card = ({ id, image, title, slug, description, createDate, content, action
     }
 
     return (
-        <div className="card bg-base-100 dark:bg-neutral text-neutral dark:text-neutral-content rounded-box border border-transparent shadow-lg px-5 py-4 m-2 hover:shadow-slate-950" id={id} aria-label={`card-${id}`} >
+        <div className="card bg-baseLight dark:bg-baseDark text-textLight dark:text-textDark rounded-box border border-transparent shadow-lg px-5 py-4 m-2 hover:shadow-slate-950" id={id} aria-label={`card-${id}`} >
             <Link href={`/articles/${slug}`} aria-label={`main-${id}-link`}>
                 {image ? <figure><Image src={image} alt="Album" width={default_width} height={default_height} className='object-scale-down' aria-label={`image-${id}`} /></figure> : <span aria-label={`noImage-${id}`}></span>}
                 <div className="card-body" aria-label={`body-${id}`}>
@@ -25,7 +25,7 @@ const Card = ({ id, image, title, slug, description, createDate, content, action
                     <div className='divider'></div>
                     {contentTrunc ? <p aria-label={`contentTrunc-${id}`} className='font-mono'>{String(content.substring(0, contentTrunc))}</p> : <p aria-label={`contentFull-${id}`} className='font-mono'>{content}</p>}<br />
                     {tags && tags.length ? 
-                        <div className="card-actions justify-center" aria-label={`withTags-${id}`}><h3 className="opacity-50">Tags:</h3>{tags.map(tag => {return <Tag key={tag.id} id={tag.id} value={tag.value} articleIDs={tag.articleIDs} />})}</div> 
+                        <div className="card-actions justify-center" aria-label={`withTags-${id}`}><h3 className="opacity-50">Tags:</h3>{tags.map(tag => {return <Tag key={tag.id} id={tag.id} slug={tag.slug} value={tag.value} articleIDs={tag.articleIDs} />})}</div> 
                         : <div className="card-actions justify-center" aria-label={`withoutTags-${id}`}><h3 className="opacity-50">Tags: N/A</h3></div>}
                 </div>
             </Link>

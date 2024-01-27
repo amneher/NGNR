@@ -24,7 +24,8 @@ model Article {
 }
 
 model Tag {
-  id                String @id @map("_id") @db.ObjectId
+  id                 String @id @map("_id") @db.ObjectId
+  slug               String @unique
   value              String
   articleIDs         String[] @db.ObjectId
   articles           Article[]   @relation(fields: [articleIDs], references: [id])

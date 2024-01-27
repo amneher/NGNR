@@ -36,7 +36,7 @@ export default function RootLayout({
 }) {
   return (
     <html data-theme="retro" lang="en" className={`${moderno.variable} ${chivoMono.variable}`}>
-      <body className={`bg-base-100 dark:bg-stone-500 text-neutral dark:text-neutral-content`}>
+      <body className={`bg-baseLight dark:bg-baseDark text-textLight dark:text-textDark`}>
         <NavBar />
         {children}
         <Footer />

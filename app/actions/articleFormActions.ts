@@ -33,6 +33,9 @@ export async function CreateArticle(formData: FormData) {
 
   const data = parse.data;
 
+  console.log(data)
+  return
+
   const articleID = new ObjectID().toHexString();
   await prisma.article.create({
     data: {
@@ -92,6 +95,7 @@ const newTags = async (tagsToCreate: string[], articleID: string) => {
   const tagList = tagsToCreate.map(tag => {
     return {
       id: new ObjectID().toHexString(),
+      slug: tag.toLowerCase().split(" ").join("-"),
       value: tag,
       articleIDs: [articleID],
     };

@@ -23,6 +23,7 @@ export default async function Home({ searchParams, }: { searchParams?: { query?:
               key={item.id}
               id={item.id}
               title={item.title}
+              slug={item.slug}
               image={item.image}
               createDate={item.createDate}
               description={item.description}

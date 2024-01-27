@@ -127,12 +127,12 @@ export async function getHomeArticles() {
   return articles;
 }
 
-export async function getArticle(id: string) {
+export async function getArticle(slug: string) {
   noStore();
-  // get an article by id from the database and return it as an Article.
+  // get an article by slug from the database and return it as an Article.
   const item = await prisma.article.findFirstOrThrow({
     where: {
-      id: `${id}`,
+      slug: slug,
     },
   });
   const article = await buildArticle(item);
@@ -206,6 +206,7 @@ const buildArticle = async (item: {
   id: string;
   image: string | null;
   title: string;
+  slug: string;
   createDate: Date;
   description: string | null;
   content: string;
@@ -218,6 +219,7 @@ const buildArticle = async (item: {
     id: item.id,
     image: item.image ? item.image : null,
     title: item.title,
+    slug: item.slug,
     createDate: item.createDate,
     description: item.description ? item.description : null,
     content: item.content,
@@ -230,11 +232,13 @@ const buildArticle = async (item: {
 
 const buildTag = (item: {
   id: string;
+  slug: string;
   value: string;
   articleIDs?: string[];
 }) => {
   const tag: Tag = {
     id: item.id,
+    slug: item.slug,
     value: item.value,
     articleIDs: item.articleIDs ? item.articleIDs : [],
   };

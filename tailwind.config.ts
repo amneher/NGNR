@@ -34,6 +34,23 @@ export default {
     require("@tailwindcss/forms")
   ],
   daisyui: {
-    themes: ["light", "retro", "dim"],
+    themes: [
+      "light",
+      "dim",
+      {
+        retro: {
+          ...require("daisyui/src/theming/themes")["retro"],
+          primary: "#9FC9A1",
+          secondary: "#79729E",
+          accent: "#FFC663",
+          info: "#8FBB73",
+          warning: "#E25242",
+          baseDark: "#63429E",
+          textDark: "#D3C6EE",
+          textLight: "#130034",
+          baseLight: "#C5BAC6"
+        },
+      },
+    ],
   },
 } satisfies Config;
