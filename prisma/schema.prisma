@@ -17,6 +17,7 @@ model Article {
   slug               String @unique
   createDate         DateTime @default(now())
   description        String?
+  teaser             String
   content            String
   actions            String[]
   tagIDs             String[] @db.ObjectId

@@ -5,7 +5,7 @@ import Image from 'next/image'
 import Tag from '@/app/components/Tag'
 
 
-const Card = ({ id, image, title, slug, description, createDate, content, actions, tagIDs, tags }: Article) => {
+const Card = ({ id, image, title, slug, description, teaser, createDate, content, actions, tagIDs, tags }: Article) => {
     const default_width = "420"
     const default_height = "420"
 
@@ -23,7 +23,7 @@ const Card = ({ id, image, title, slug, description, createDate, content, action
                     {description ? <h3 className="opacity-50 font-mono" aria-label={`description-${id}`}>{description}</h3> : <span aria-label={`noDescription-${id}`}></span>}
                     <h3 className="opacity-50 font-mono" aria-label={`createDate-${id}`}>{createDate.toDateString()}</h3>
                     <div className='divider'></div>
-                    {contentTrunc ? <p aria-label={`contentTrunc-${id}`} className='font-mono'>{String(content.substring(0, contentTrunc))}</p> : <p aria-label={`contentFull-${id}`} className='font-mono'>{content}</p>}<br />
+                    {contentTrunc ? <p aria-label={`teaser-${id}`} className='font-mono'>{teaser}</p> : <p aria-label={`content-${id}`} className='font-mono'>{content}</p>}<br />
                     {tags && tags.length ? 
                         <div className="card-actions justify-center" aria-label={`withTags-${id}`}><h3 className="opacity-50">Tags:</h3>{tags.map(tag => {return <Tag key={tag.id} id={tag.id} slug={tag.slug} value={tag.value} articleIDs={tag.articleIDs} />})}</div> 
                         : <div className="card-actions justify-center" aria-label={`withoutTags-${id}`}><h3 className="opacity-50">Tags: N/A</h3></div>}

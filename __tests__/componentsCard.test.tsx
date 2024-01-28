@@ -13,6 +13,8 @@ const mockArticleBuilder = () => {
         image: "https://drscdn.500px.org/photo/1083418373/q%3D80_m%3D600/v2?sig=df14fb3586104bb9f7de82ab02923a8532ed20bbd1630400a8d3bc0e8ab4de63",
         title: "Test Article",
         description: "A test article is a testicle?",
+        teaser: "If a test article is a testicle, I'm just writing balls.",
+        slug: "test-article",
         createDate: new Date(),
         content: "Content test. Contest. Testing . . . Content Blah Blah Blah",
         actions: ['homeLimit'],
@@ -22,16 +24,19 @@ const mockArticleBuilder = () => {
     mockTags = [
         {
             id: mockTagIDs[0],
+            slug: "test-tag1",
             value: "TestTag1",
             articleIDs: [mockArticle.id]
         },
         {
             id: mockTagIDs[1],
+            slug: "test-tag2",
             value: "TestTag2",
             articleIDs: [mockArticle.id]
         },
         {
             id: mockTagIDs[2],
+            slug: "test-tag3",
             value: "TestTag3",
             articleIDs: [mockArticle.id]
         }
@@ -48,6 +53,8 @@ describe("Card", () => {
             image={mockArticle.image}
             title={mockArticle.title}
             description={mockArticle.description}
+            slug={mockArticle.slug}
+            teaser={mockArticle.teaser}
             createDate={mockArticle.createDate}
             content={mockArticle.content}
             actions={mockArticle.actions}
@@ -64,6 +71,8 @@ describe("Card", () => {
             image={mockArticle.image}
             title={mockArticle.title}
             description={mockArticle.description}
+            slug={mockArticle.slug}
+            teaser={mockArticle.teaser}
             createDate={mockArticle.createDate}
             content={mockArticle.content}
             actions={mockArticle.actions}
@@ -80,6 +89,8 @@ describe("Card", () => {
             image={mockArticle.image}
             title={mockArticle.title}
             description={mockArticle.description}
+            slug={mockArticle.slug}
+            teaser={mockArticle.teaser}
             createDate={mockArticle.createDate}
             content={mockArticle.content}
             actions={mockArticle.actions}
@@ -96,6 +107,8 @@ describe("Card", () => {
             image={""}
             title={mockArticle.title}
             description={mockArticle.description}
+            slug={mockArticle.slug}
+            teaser={mockArticle.teaser}
             createDate={mockArticle.createDate}
             content={mockArticle.content}
             actions={mockArticle.actions}
@@ -112,6 +125,8 @@ describe("Card", () => {
             image={mockArticle.image}
             title={mockArticle.title}
             description={mockArticle.description}
+            slug={mockArticle.slug}
+            teaser={mockArticle.teaser}
             createDate={mockArticle.createDate}
             content={mockArticle.content}
             actions={mockArticle.actions}
@@ -128,6 +143,8 @@ describe("Card", () => {
             image={mockArticle.image}
             title={mockArticle.title}
             description={mockArticle.description}
+            slug={mockArticle.slug}
+            teaser={mockArticle.teaser}
             createDate={mockArticle.createDate}
             content={mockArticle.content}
             actions={mockArticle.actions}
@@ -144,6 +161,8 @@ describe("Card", () => {
             image={mockArticle.image}
             title={mockArticle.title}
             description={mockArticle.description}
+            slug={mockArticle.slug}
+            teaser={mockArticle.teaser}
             createDate={mockArticle.createDate}
             content={mockArticle.content}
             actions={mockArticle.actions}
@@ -161,6 +180,8 @@ describe("Card", () => {
             title={mockArticle.title}
             description={""}
             createDate={mockArticle.createDate}
+            slug={mockArticle.slug}
+            teaser={mockArticle.teaser}
             content={mockArticle.content}
             actions={mockArticle.actions}
             tagIDs={mockArticle.tagIDs}
@@ -176,6 +197,8 @@ describe("Card", () => {
             image={mockArticle.image}
             title={mockArticle.title}
             description={mockArticle.description}
+            slug={mockArticle.slug}
+            teaser={mockArticle.teaser}
             createDate={mockArticle.createDate}
             content={mockArticle.content}
             actions={mockArticle.actions}
@@ -193,12 +216,14 @@ describe("Card", () => {
             title={mockArticle.title}
             description={mockArticle.description}
             createDate={mockArticle.createDate}
+            slug={mockArticle.slug}
+            teaser={mockArticle.teaser}
             content={mockArticle.content}
             actions={mockArticle.actions}
             tagIDs={mockArticle.tagIDs}
             tags={mockArticle.tags}
         />)
-        const contentTrunc = screen.getByLabelText(`contentTrunc-${mockArticle.id}`)
+        const contentTrunc = screen.getByLabelText(`teaser-${mockArticle.id}`)
         expect(contentTrunc).toBeInTheDocument()
     }),
     it('should render the article contentFull if "homeLimit" not in actions', () => {
@@ -208,13 +233,15 @@ describe("Card", () => {
             image={mockArticle.image}
             title={mockArticle.title}
             description={mockArticle.description}
+            slug={mockArticle.slug}
+            teaser={mockArticle.teaser}
             createDate={mockArticle.createDate}
             content={mockArticle.content}
             actions={[]}
             tagIDs={mockArticle.tagIDs}
             tags={mockArticle.tags}
         />)
-        const contentFull = screen.getByLabelText(`contentFull-${mockArticle.id}`)
+        const contentFull = screen.getByLabelText(`content-${mockArticle.id}`)
         expect(contentFull).toBeInTheDocument()
     }),
     it('should render the article tags if present', () => {
@@ -224,6 +251,8 @@ describe("Card", () => {
             image={mockArticle.image}
             title={mockArticle.title}
             description={mockArticle.description}
+            slug={mockArticle.slug}
+            teaser={mockArticle.teaser}
             createDate={mockArticle.createDate}
             content={mockArticle.content}
             actions={mockArticle.actions}
@@ -240,6 +269,8 @@ describe("Card", () => {
             image={mockArticle.image}
             title={mockArticle.title}
             description={mockArticle.description}
+            slug={mockArticle.slug}
+            teaser={mockArticle.teaser}
             createDate={mockArticle.createDate}
             content={mockArticle.content}
             actions={mockArticle.actions}

@@ -209,6 +209,7 @@ const buildArticle = async (item: {
   slug: string;
   createDate: Date;
   description: string | null;
+  teaser: string;
   content: string;
   actions: string[] | null;
   tagIDs: string[] | null;
@@ -222,6 +223,7 @@ const buildArticle = async (item: {
     slug: item.slug,
     createDate: item.createDate,
     description: item.description ? item.description : null,
+    teaser: item.teaser,
     content: item.content,
     actions: item.actions ? item.actions : null,
     tagIDs: item.tagIDs ? item.tagIDs : [],

@@ -5,6 +5,7 @@ export interface Article {
   slug: string;
   createDate: Date;
   description: string | null;
+  teaser: string;
   content: string;
   actions: string[] | null;
   tagIDs: string[];

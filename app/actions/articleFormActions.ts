@@ -14,7 +14,8 @@ export async function CreateArticle(formData: FormData) {
     slug: z.string().optional(),
     createDate: z.string().min(1),
     description: z.string(),
-    content: z.string().min(1),
+    teaser: z.string().min(50),
+    content: z.string().min(100),
     tags: z.string(),
   });
   const parse = schema.safeParse({
@@ -23,6 +24,7 @@ export async function CreateArticle(formData: FormData) {
     slug: formData.get("slug"),
     createDate: new Date().toISOString(),
     description: formData.get("description"),
+    teaser: formData.get("teaser"),
     content: formData.get("content"),
     tags: formData.get("tags"),
   });
@@ -45,6 +47,7 @@ export async function CreateArticle(formData: FormData) {
       slug: data.slug || data.title.toLowerCase().split(" ").join("-"),
       createDate: data.createDate,
       description: data.description,
+      teaser: data.teaser,
       content: data.content,
     },
   });

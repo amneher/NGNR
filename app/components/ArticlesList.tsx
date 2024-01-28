@@ -19,6 +19,7 @@ export default async function ArticlesList({ query, currentPage }: {query: strin
                         slug={article.slug}
                         createDate={article.createDate}
                         description={article.description}
+                        teaser={article.teaser}
                         content={article.content}
                         actions={article.actions}
                         tagIDs={article.tagIDs}
