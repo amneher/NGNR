@@ -9,7 +9,7 @@ import { Article, Tag } from "@/app/models/article";
 
 export async function CreateArticle(formData: FormData) {
   const schema = z.object({
-    image: z.string(),
+    image: z.string().optional(),
     title: z.string().min(1),
     slug: z.string().optional(),
     createDate: z.string().min(1),
@@ -36,7 +36,6 @@ export async function CreateArticle(formData: FormData) {
   const data = parse.data;
 
   console.log(data)
-  return
 
   const articleID = new ObjectID().toHexString();
   await prisma.article.create({

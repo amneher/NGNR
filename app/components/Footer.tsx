@@ -1,14 +1,15 @@
 import Link from "next/link";
 import React from "react";
+import ContactForm from "@/app/components/ContactForm";
 
 const Footer = () => {
   return (
     <footer
-      className="footer flex p-10 bg-secondary dark:bg-neutral text-secondary-content dark:text-neutral-content inset-x-0 bottom-0 place-content-center"
+      className="footer flex relative p-10 bg-primary dark:bg-neutral text-primary-content dark:text-neutral-content inset-x-0 bottom-0 place-content-center"
       aria-label="footer-container"
     >
       <aside aria-label="footer-branding">
-        <div className="fill-secondary-content dark:fill-neutral-content" aria-label="footer-logo">
+        <div className="fill-primary-content dark:fill-neutral-content" aria-label="footer-logo">
           <svg
             width="60"
             height="60"
@@ -31,19 +32,18 @@ const Footer = () => {
         </p>
       </aside>
       <nav aria-label="footer-services">
-        <header className="footer-title">Services</header>
-        <Link href="#" className="link link-hover">
-          Development
-        </Link>
-        <Link href="#" className="link link-hover">
-          Translation
-        </Link>
-        <Link href="#" className="link link-hover">
-          Writing
-        </Link>
+        <header className="footer-title">Consulting Services</header>
+        <div className="dropdown dropdown-top">
+            <div tabIndex={0} role="button" className="btn bg-accent dark:bg-neutral text-neutral dark:text-neutral-content">Contact Me</div>
+            <ul tabIndex={0} className="dropdown-content z-[1] p-4 shadow text-neutral bg-base-100 dark:text-neutral-content dark:bg-base-300 rounded-md w-72">
+                <li>
+                    <ContactForm />
+                </li>
+            </ul>
+        </div>
       </nav>
       <nav aria-label="footer-contact">
-        <header className="footer-title">Contact</header>
+        <header className="footer-title">Socials</header>
         <Link
           href="https://github.com/amneher"
           target="_blank"

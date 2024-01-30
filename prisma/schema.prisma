@@ -35,6 +35,7 @@ model Tag {
 model Resume {
   id                String @id @map("_id") @db.ObjectId
   name              String
+  createDate        DateTime @default(now())
   photoURL          String?
   contact           ContactItem[]
   intro             String?
@@ -45,20 +46,22 @@ model ContactItem {
   id                String @id @map("_id") @db.ObjectId
   name              String
   value             String
-  resume            Resume @relation(fields: [resumeID], references: [id])
-  resumeID          String @db.ObjectId
+  include           Boolean @default(true)
+  resume            Resume? @relation(fields: [resumeID], references: [id])
+  resumeID          String? @db.ObjectId
 }
 
 model ResumeItem {
   id                String @id @map("_id") @db.ObjectId
+  include           Boolean @default(true)
   title             String
   company           String
   startDate         DateTime @default(now())
   endDate           DateTime?
   description       String?
   items             String[]
-  resume            Resume @relation(fields: [resumeID], references: [id])
-  resumeID          String @db.ObjectId
+  resume            Resume? @relation(fields: [resumeID], references: [id])
+  resumeID          String? @db.ObjectId
 }
 
 model ResourceItem {

@@ -8,7 +8,7 @@ export default function ArticleForm() {
   return (
     <form
       action={CreateArticle}
-      className="justify-center my-2 bg-stone-400 dark:bg-stone-600 text-neutral rounded-box shadow py-4"
+      className="justify-center my-2 bg-base-200 dark:bg-base-300 text-neutral dark:text-neutral-content rounded-box shadow py-4"
     >
       <h2 className="text-2xl font-semibold my-2">Create A New Article</h2>
       <input

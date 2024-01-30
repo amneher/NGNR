@@ -10,6 +10,7 @@ export default async function ArticlesList({ query, currentPage }: {query: strin
     return (
         <Suspense fallback={<Loading />}>
         {articles.map(article => {
+            article.actions ? article.actions.push("homeLimit") : article.actions;
             return (
                 <div key={(article).slug}>
                     <Card

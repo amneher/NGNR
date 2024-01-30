@@ -1,14 +1,15 @@
-import ArticleForm from "@/app/components/ArticleForm";
-import ColumnPageContainer from "@/app/components/ColumnPageContainer";
 import { auth } from "@/app/api/auth/[...nextauth]/auth";
+import CVBaseForm from "@/app/components/CVBaseForm";
+import ColumnPageContainer from "@/app/components/ColumnPageContainer";
 import NotLoggedIn from "@/app/components/NotLoggedIn";
 
-export default async function ArticleCreatePage() {
+export default async function resumeBaseAdminPage() {
   const session = await auth();
+
   if (process.env.NODE_ENV !== "production" || session) {
     return (
       <ColumnPageContainer columns={1}>
-        <ArticleForm />
+        <CVBaseForm />
       </ColumnPageContainer>
     );
   } else {

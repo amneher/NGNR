@@ -1,6 +1,7 @@
 import prisma from "./db";
 import { unstable_noStore as noStore } from "next/cache";
 import { Article, Tag } from "../models/article";
+import { ContactItem, Resume, ResumeItem } from "../models/resume";
 
 export async function fetchFilteredArticles(
   query: string,
@@ -202,6 +203,70 @@ export async function getTagsByArticleID(articleID: string) {
   return tagList;
 }
 
+export async function getAllResumes() {
+  noStore();
+  const items = await prisma.resume.findMany({
+    orderBy: {
+      createDate: "desc"
+    }
+  })
+  let resumes: Resume[] = []
+  for (let index = 0; index < items.length; index++) {
+    const element = await buildResume(items[index]);
+    resumes.push(element)
+  }
+  return resumes
+}
+
+export async function getCurrentResume() {
+  noStore();
+  const currentResume = await prisma.resume.findFirstOrThrow({
+    orderBy: {
+      createDate: "desc"
+    }
+  })
+  const resume = await buildResume(currentResume);
+  return resume;
+}
+
+export async function getContactItems(resumeID: string) {
+  noStore();
+  const contactItems = await prisma.contactItem.findMany({
+    where: {
+      AND: [
+        {
+          resumeID: resumeID
+        },
+        {
+          include: true
+        }
+      ]
+    }
+  })
+  return contactItems.map(item => buildContactItem(item))
+}
+
+export async function getResumeItems(resumeID: string) {
+  noStore();
+
+  const resumeItems = await prisma.resumeItem.findMany({
+    where: {
+      AND: [
+        {
+          include: true
+        },
+        {
+          resumeID: resumeID
+        }
+      ]
+    },
+    orderBy: {
+      startDate: "desc"
+    }
+  })
+  return resumeItems.map(item => buildResumeItem(item))
+}
+
 const buildArticle = async (item: {
   id: string;
   image: string | null;
@@ -246,3 +311,62 @@ const buildTag = (item: {
   };
   return tag;
 };
+
+const buildResume = async (item: {
+  id: string
+  name: string
+  createDate: Date
+  photoURL: string | null
+  intro: string | null
+}) => {
+  const contactItems = await getContactItems(item.id)
+  const resumeItems = await getResumeItems(item.id)
+  const resume: Resume = {
+    id: item.id,
+    name: item.name,
+    createDate: item.createDate,
+    photoURL: item.photoURL,
+    contact: contactItems,
+    intro: item.intro,
+    experience: resumeItems
+  }
+  return resume;
+}
+
+const buildContactItem = (item: {
+  id: string
+  name: string
+  value: string
+  include: boolean
+}) => {
+  const contactItem: ContactItem = {
+    id: item.id,
+    name: item.name,
+    value: item.value,
+    include: item.include
+  }
+  return contactItem;
+}
+
+const buildResumeItem = (item: {
+  id: string
+  include: boolean
+  title: string
+  company: string
+  startDate: Date
+  endDate: Date | null
+  description: string | null
+  items: string[]
+}) => {
+  const resumeItem: ResumeItem = {
+    id: item.id,
+    include: item.include,
+    title: item.title,
+    company: item.company,
+    startDate: item.startDate,
+    endDate: item.endDate,
+    description: item.description,
+    items: item.items
+  }
+  return resumeItem;
+}

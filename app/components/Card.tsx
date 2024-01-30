@@ -15,7 +15,7 @@ const Card = ({ id, image, title, slug, description, teaser, createDate, content
     }
 
     return (
-        <div className="card bg-baseLight dark:bg-baseDark text-textLight dark:text-textDark rounded-box border border-transparent shadow-lg px-5 py-4 m-2 hover:shadow-slate-950" id={id} aria-label={`card-${id}`} >
+        <div className="card bg-base-200 dark:bg-neutral text-base-content dark:text-neutral-content rounded-box border border-transparent shadow-lg px-5 py-4 m-2 hover:shadow-slate-950" id={id} aria-label={`card-${id}`} >
             <Link href={`/articles/${slug}`} aria-label={`main-${id}-link`}>
                 {image ? <figure><Image src={image} alt="Album" width={default_width} height={default_height} className='object-scale-down' aria-label={`image-${id}`} /></figure> : <span aria-label={`noImage-${id}`}></span>}
                 <div className="card-body" aria-label={`body-${id}`}>

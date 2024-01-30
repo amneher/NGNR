@@ -5,7 +5,6 @@ import { ErrorBoundary } from "react-error-boundary";
 import SearchBox from "@/app/components/SearchBox";
 import { usePathname } from "next/navigation";
 import clsx from "clsx";
-import { logError } from "../utils/helpers";
 
 const NavBar = () => {
   const path = usePathname();
@@ -30,9 +29,9 @@ const NavBar = () => {
   ]
 
   return (
-    <div className="navbar bg-secondary dark:bg-neutral text-secondary-content dark:text-neutral-content md:flex gap-2 rounded-full" aria-label="navbar-container">
+    <div className="navbar bg-primary dark:bg-neutral text-primary-content dark:text-neutral-content md:flex gap-2 rounded-full" aria-label="navbar-container">
       <div className="navbar-start" aria-label="navbar-start">
-        <Link aria-label="homeIcon" href="/" className="max-md:hidden fill-secondary-content dark:fill-neutral-content ml-2">
+        <Link aria-label="homeIcon" href="/" className="max-md:hidden fill-primary-content dark:fill-neutral-content ml-2">
           <svg
             width="60"
             height="60"
@@ -55,7 +54,7 @@ const NavBar = () => {
             role="button"
             className="btn btn-ghost btn-circle avatar m-2"
           >
-            <div className="w-14 rounded-full p-2 fill-neutral dark:fill-neutral-content">
+            <div className="w-14 rounded-full p-2 fill-primary-content dark:fill-neutral-content">
               <svg
                 width="30"
                 height="30"
@@ -99,7 +98,7 @@ const NavBar = () => {
             <Link href={link.href} aria-label={link.label}>
               <h2 className={clsx(`m-2 text-1xl font-semibold`,
                 {
-                  'underline underline-offset-8 text-secondary-content dark:text-stone-400': path === link.href,
+                  'underline underline-offset-8 text-primary-content dark:text-base-200': path === link.href,
                 }, )}>{link.name}</h2>
             </Link>
           </li>
