@@ -1,3 +1,5 @@
+import { Author } from "@/app/models/author";
+
 export interface Article {
   id: string;
   image: string | null;
@@ -10,6 +12,8 @@ export interface Article {
   actions: string[] | null;
   tagIDs: string[];
   tags: Tag[] | null;
+  author: Author | undefined;
+  authorID: string | undefined;
 }
 
 export interface Tag {

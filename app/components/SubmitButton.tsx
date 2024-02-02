@@ -7,7 +7,7 @@ export default function SubmitButton() {
     const { pending } = useFormStatus()
   
     return (
-      <button type="submit" className="btn btn-wide btn-accent dark:bg-base-300 dark:text-neutral-content" aria-disabled={pending}>
+      <button type="submit" className="btn btn-wide btn-accent dark:bg-neutral dark:text-neutral-content" aria-disabled={pending}>
         Submit
       </button>
     )

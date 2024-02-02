@@ -1,4 +1,4 @@
-import ArticleForm from "@/app/components/ArticleForm";
+import ArticleForm from "@/app/components/forms/ArticleForm";
 import ColumnPageContainer from "@/app/components/ColumnPageContainer";
 import { auth } from "@/app/api/auth/[...nextauth]/auth";
 import NotLoggedIn from "@/app/components/NotLoggedIn";

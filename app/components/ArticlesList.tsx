@@ -25,6 +25,8 @@ export default async function ArticlesList({ query, currentPage }: {query: strin
                         actions={article.actions}
                         tagIDs={article.tagIDs}
                         tags={article.tags}
+                        authorID={article.authorID}
+                        author={article.author}
                     />
                 </div>
             )

@@ -2,6 +2,8 @@ import prisma from "./db";
 import { unstable_noStore as noStore } from "next/cache";
 import { Article, Tag } from "../models/article";
 import { ContactItem, Resume, ResumeItem } from "../models/resume";
+import { Author } from "../models/author";
+import Error from "next/error";
 
 export async function fetchFilteredArticles(
   query: string,
@@ -178,6 +180,32 @@ export async function getArticlesByTagID(tagID: string) {
   return articles;
 }
 
+export async function getAuthor(authorID:string|undefined) {
+  noStore();
+  const result = await prisma.author.findFirstOrThrow({
+    where: {
+      id: authorID
+    }
+  })
+  return buildAuthor(result)
+}
+
+export async function getAuthorBySlug(authorSlug:string) {
+  noStore();
+  const result = await prisma.author.findFirstOrThrow({
+    where: {
+      slug: authorSlug
+    }
+  })
+  return buildAuthor(result)
+}
+
+export async function getAllAuthors() {
+  noStore();
+  const result = await prisma.author.findMany()
+  return result.map(item => buildAuthor(item))
+}
+
 export async function getTag(id: string) {
   noStore();
   const tag = await prisma.tag.findFirstOrThrow({
@@ -278,8 +306,10 @@ const buildArticle = async (item: {
   content: string;
   actions: string[] | null;
   tagIDs: string[] | null;
+  authorID: string;
 }) => {
   const tags = await getTagsByArticleID(item.id);
+  const author = await getAuthor(item.authorID);
 
   const article: Article = {
     id: item.id,
@@ -293,6 +323,8 @@ const buildArticle = async (item: {
     actions: item.actions ? item.actions : null,
     tagIDs: item.tagIDs ? item.tagIDs : [],
     tags: tags,
+    author: author,
+    authorID: item.authorID
   };
   return article;
 };
@@ -369,4 +401,19 @@ const buildResumeItem = (item: {
     items: item.items
   }
   return resumeItem;
+}
+
+const buildAuthor = (item: {
+  id: string
+  slug: string
+  title: string
+  photoUrl: string | undefined
+}) => {
+  const author: Author = {
+    id: item.id,
+    slug: item.slug,
+    title: item.title,
+    photoUrl: item.photoUrl
+  }
+  return author;
 }

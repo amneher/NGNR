@@ -25,7 +25,7 @@ export default async function resumePage() {
     } else {
         return (
             <ColumnPageContainer columns={1}>
-                <h2 className={`m-2 text-1xl font-semibold`}>Oops! Couldn&apos;t find a resume to load...</h2>
+                <h2 className={`m-2 text-1xl font-semibold h-screen`}>Oops! Couldn&apos;t find a resume to load...</h2>
             </ColumnPageContainer>
         )
     }

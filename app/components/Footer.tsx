@@ -1,11 +1,11 @@
 import Link from "next/link";
 import React from "react";
-import ContactForm from "@/app/components/ContactForm";
+import ContactForm from "@/app/components/forms/ContactForm";
 
 const Footer = () => {
   return (
     <footer
-      className="footer flex relative p-10 bg-primary dark:bg-neutral text-primary-content dark:text-neutral-content inset-x-0 bottom-0 place-content-center"
+      className="footer flex relative p-10 bg-primary dark:bg-gradient-to-b from-indigo-950 to-neutral text-primary-content dark:text-neutral-content inset-x-0 bottom-0 place-content-center"
       aria-label="footer-container"
     >
       <aside aria-label="footer-branding">

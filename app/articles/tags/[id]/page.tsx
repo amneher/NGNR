@@ -13,6 +13,7 @@ export default async function TagArticlesPage({ params: { id } }: Props) {
   return (
     <ColumnPageContainer columns={1}>
       {articles.map((article) => {
+        article.actions ? article.actions.push("homeLimit") : article.actions;
         return (
           <div key={article.id}>
             <Card
@@ -27,6 +28,8 @@ export default async function TagArticlesPage({ params: { id } }: Props) {
               actions={article.actions}
               tagIDs={article.tagIDs}
               tags={article.tags}
+              authorID={article.authorID}
+              author={article.author}
             />
           </div>
         );

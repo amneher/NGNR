@@ -1,5 +1,5 @@
 import { auth } from "@/app/api/auth/[...nextauth]/auth";
-import CVExperienceItemForm from "@/app/components/CVExperienceItemForm";
+import CVExperienceItemForm from "@/app/components/forms/CVExperienceItemForm";
 import ColumnPageContainer from "@/app/components/ColumnPageContainer";
 import NotLoggedIn from "@/app/components/NotLoggedIn";
 

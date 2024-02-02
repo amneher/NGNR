@@ -10,80 +10,90 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
+model Author {
+  id       String    @id @map("_id") @db.ObjectId
+  slug     String    @unique
+  title    String
+  photoUrl String
+  articles Article[] @relation
+}
+
 model Article {
-  id                 String @id @map("_id") @db.ObjectId
-  image              String?
-  title              String
-  slug               String @unique
-  createDate         DateTime @default(now())
-  description        String?
-  teaser             String
-  content            String
-  actions            String[]
-  tagIDs             String[] @db.ObjectId
-  tags               Tag[]  @relation(fields: [tagIDs], references: [id])
+  id          String   @id @map("_id") @db.ObjectId
+  image       String?
+  title       String
+  slug        String   @unique
+  createDate  DateTime @default(now())
+  description String?
+  teaser      String
+  content     String
+  actions     String[]
+  tagIDs      String[] @db.ObjectId
+  tags        Tag[]    @relation(fields: [tagIDs], references: [id])
+  authorID    String  @db.ObjectId
+  author      Author  @relation(fields: [authorID], references: [id])
 }
 
 model Tag {
-  id                 String @id @map("_id") @db.ObjectId
-  slug               String @unique
-  value              String
-  articleIDs         String[] @db.ObjectId
-  articles           Article[]   @relation(fields: [articleIDs], references: [id])
+  id         String    @id @map("_id") @db.ObjectId
+  slug       String    @unique
+  value      String
+  articleIDs String[]  @db.ObjectId
+  articles   Article[] @relation(fields: [articleIDs], references: [id])
 }
 
 model Resume {
-  id                String @id @map("_id") @db.ObjectId
-  name              String
-  createDate        DateTime @default(now())
-  photoURL          String?
-  contact           ContactItem[]
-  intro             String?
-  experience        ResumeItem[]
+  id         String        @id @map("_id") @db.ObjectId
+  name       String
+  createDate DateTime      @default(now())
+  photoURL   String?
+  contact    ContactItem[]
+  intro      String?
+  experience ResumeItem[]
 }
 
 model ContactItem {
-  id                String @id @map("_id") @db.ObjectId
-  name              String
-  value             String
-  include           Boolean @default(true)
-  resume            Resume? @relation(fields: [resumeID], references: [id])
-  resumeID          String? @db.ObjectId
+  id       String  @id @map("_id") @db.ObjectId
+  name     String
+  value    String
+  include  Boolean @default(true)
+  resume   Resume? @relation(fields: [resumeID], references: [id])
+  resumeID String? @db.ObjectId
 }
 
 model ResumeItem {
-  id                String @id @map("_id") @db.ObjectId
-  include           Boolean @default(true)
-  title             String
-  company           String
-  startDate         DateTime @default(now())
-  endDate           DateTime?
-  description       String?
-  items             String[]
-  resume            Resume? @relation(fields: [resumeID], references: [id])
-  resumeID          String? @db.ObjectId
+  id          String    @id @map("_id") @db.ObjectId
+  include     Boolean   @default(true)
+  title       String
+  company     String
+  startDate   DateTime  @default(now())
+  endDate     DateTime?
+  description String?
+  items       String[]
+  resume      Resume?   @relation(fields: [resumeID], references: [id])
+  resumeID    String?   @db.ObjectId
 }
 
 model ResourceItem {
-  id                String @id @map("_id") @db.ObjectId
-  link              String?
-  title             String
-  content           String
+  id      String  @id @map("_id") @db.ObjectId
+  link    String?
+  title   String
+  content String
 }
 
 model Account {
-  id                 String  @id @default(cuid()) @map("_id") @db.ObjectId
-  userId             String  @map("user_id") @db.ObjectId
-  type               String
-  provider           String
-  providerAccountId  String  @map("provider_account_id")
-  refresh_token      String? @db.String
-  access_token       String? @db.String
-  expires_at         Int?
-  token_type         String?
-  scope              String?
-  id_token           String? @db.String
-  session_state      String?
+  id                String  @id @default(cuid()) @map("_id") @db.ObjectId
+  userId            String  @map("user_id") @db.ObjectId
+  type              String
+  provider          String
+  providerAccountId String  @map("provider_account_id")
+  refresh_token     String? @db.String
+  access_token      String? @db.String
+  expires_at        Int?
+  token_type        String?
+  scope             String?
+  id_token          String? @db.String
+  session_state     String?
 
   user User @relation(fields: [userId], references: [id], onDelete: Cascade)
 
@@ -96,7 +106,6 @@ model Session {
   userId       String   @map("user_id") @db.ObjectId
   expires      DateTime
   user         User     @relation(fields: [userId], references: [id], onDelete: Cascade)
-
 }
 
 model User {
@@ -107,7 +116,6 @@ model User {
   image         String?
   accounts      Account[]
   sessions      Session[]
-
 }
 
 model VerificationToken {

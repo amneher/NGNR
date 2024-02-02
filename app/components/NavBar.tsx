@@ -5,16 +5,22 @@ import { ErrorBoundary } from "react-error-boundary";
 import SearchBox from "@/app/components/SearchBox";
 import { usePathname } from "next/navigation";
 import clsx from "clsx";
+import { Session } from "next-auth";
 
-const NavBar = () => {
+const NavBar = ({session}: {session: Session | null}) => {
   const path = usePathname();
 
   // move these in the future...
-  const links = [
+  var links = [
     {
       "name": "Posts",
       "href": "/articles",
       "label": "posts"
+    },
+    {
+      "name": "Galleries",
+      "href": "/galleries",
+      "label": "galleries"
     },
     {
       "name": "My CV",
@@ -27,9 +33,16 @@ const NavBar = () => {
       "label": "resources"
     }
   ]
+  if (process.env.NODE_ENV !== "production" || session) {
+    links.push({
+      "name": "Admin",
+      "href": "/admin",
+      "label": "admin"
+    })
+  }
 
   return (
-    <div className="navbar bg-primary dark:bg-neutral text-primary-content dark:text-neutral-content md:flex gap-2 rounded-full" aria-label="navbar-container">
+    <div className="navbar bg-primary dark:bg-neutral text-primary-content dark:text-neutral-content md:flex gap-2 rounded-box" aria-label="navbar-container">
       <div className="navbar-start" aria-label="navbar-start">
         <Link aria-label="homeIcon" href="/" className="max-md:hidden fill-primary-content dark:fill-neutral-content ml-2">
           <svg

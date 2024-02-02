@@ -5,19 +5,19 @@ const nextConfig = {
         remotePatterns: [
             {
                 protocol: "https",
-                hostname: "photos.app.goo.gl",
+                hostname: "ngnr-media.s3.us-west-2.amazonaws.com",
                 port: "",
                 pathname: "**",
             },
             {
                 protocol: "https",
-                hostname: "photos.google.com",
+                hostname: "avatars.githubusercontent.com",
                 port: "",
                 pathname: "**",
             },
             {
                 protocol: "https",
-                hostname: "drscdn.500px.org",
+                hostname: "neherconsulting.imgix.net",
                 port: "",
                 pathname: "**",
             },

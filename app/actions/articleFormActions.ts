@@ -4,14 +4,16 @@ import ObjectID from "bson-objectid";
 import prisma from "@/app/utils/db";
 import { z } from "zod";
 import { redirect } from "next/navigation";
-import { getArticle } from "@/app/utils/loadData";
+import { getArticle, getAuthorBySlug } from "@/app/utils/loadData";
 import { Article, Tag } from "@/app/models/article";
+import { Author } from "../models/author";
 
 export async function CreateArticle(formData: FormData) {
   const schema = z.object({
     image: z.string().optional(),
     title: z.string().min(1),
     slug: z.string().optional(),
+    author: z.string(),
     createDate: z.string().min(1),
     description: z.string(),
     teaser: z.string().min(50),
@@ -22,6 +24,7 @@ export async function CreateArticle(formData: FormData) {
     image: formData.get("image"),
     title: formData.get("title"),
     slug: formData.get("slug"),
+    authorSlug: formData.get("author"),
     createDate: new Date().toISOString(),
     description: formData.get("description"),
     teaser: formData.get("teaser"),
@@ -38,6 +41,7 @@ export async function CreateArticle(formData: FormData) {
   console.log(data)
 
   const articleID = new ObjectID().toHexString();
+  const author: Author = await getAuthorBySlug(data.author) 
   await prisma.article.create({
     data: {
       id: articleID,
@@ -48,6 +52,7 @@ export async function CreateArticle(formData: FormData) {
       description: data.description,
       teaser: data.teaser,
       content: data.content,
+      authorID: author.id
     },
   });
 
