@@ -21,7 +21,7 @@ model Author {
 
 model Article {
   id          String   @id @map("_id") @db.ObjectId
-  heroImage   String?
+  heroImage   String
   title       String
   slug        String   @unique
   createDate  DateTime @default(now())
@@ -44,7 +44,7 @@ model Gallery {
   s3folder    String
   items       String[]
   authorID    String   @db.ObjectId
-  author      Author?  @relation(fields: [authorID], references: [id])
+  author      Author   @relation(fields: [authorID], references: [id])
 }
 
 model Tag {

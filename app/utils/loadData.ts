@@ -3,7 +3,6 @@ import { unstable_noStore as noStore } from "next/cache";
 import { Article, Tag } from "../models/article";
 import { ContactItem, Resume, ResumeItem } from "../models/resume";
 import { Author } from "../models/author";
-import Error from "next/error";
 import { Gallery } from "../models/gallery";
 
 export async function fetchFilteredArticles(
@@ -149,9 +148,11 @@ export async function fetchFilteredGalleries(
       },
     });
   }
-  let galleries: Gallery[] = foundGalleries.map((gallery) =>
-    buildGallery(gallery)
-  );
+  let galleries: Gallery[] = [];
+  for (let index = 0; index < foundGalleries.length; index++) {
+    const element = await buildGallery(foundGalleries[index]);
+    galleries.push(element)
+  }
   return galleries;
 }
 
@@ -187,7 +188,8 @@ export async function getGalleryBySlug(gallerySlug: string) {
       slug: gallerySlug,
     },
   });
-  return buildGallery(result);
+  const gallery =  await buildGallery(result);
+  return gallery;
 }
 
 export async function getGalleriesByAuthor(authorId: string) {
@@ -200,7 +202,12 @@ export async function getGalleriesByAuthor(authorId: string) {
       createDate: "desc",
     },
   });
-  return items.map((item) => buildGallery(item));
+  let galleries: Gallery[] = [];
+  for (let index = 0; index < items.length; index++) {
+    const element = await buildGallery(items[index]);
+    galleries.push(element)
+  }
+  return galleries;
 }
 
 export async function getAllArticles() {
@@ -420,7 +427,7 @@ export async function getResumeItems(resumeID: string) {
 
 const buildArticle = async (item: {
   id: string;
-  heroImage: string | null;
+  heroImage: string;
   title: string;
   slug: string;
   createDate: Date;
@@ -542,7 +549,7 @@ export const buildAuthor = (item: {
   return author;
 };
 
-const buildGallery = (item: {
+const buildGallery = async (item: {
   id: string;
   slug: string;
   title: string;
@@ -551,15 +558,16 @@ const buildGallery = (item: {
   s3folder: string;
   items: string[];
   authorID: string;
-  author: Author;
 }) => {
+  const author = await getAuthor(item.authorID);
+
   const gallery: Gallery = {
     id: item.id,
     slug: item.slug,
     title: item.title,
     heroImage: `${item.s3folder}/${item.items[0]}`,
     typeFolder: "galleries",
-    author: item.author,
+    author: author,
     createDate: item.createDate,
     description: item.description ? item.description : "",
     authorID: item.authorID,

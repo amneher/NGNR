@@ -2,7 +2,7 @@ import { Author } from "@/app/models/author";
 
 export interface Article {
   id: string;
-  heroImage: string | null;
+  heroImage: string;
   title: string;
   slug: string;
   createDate: Date;
