@@ -2,7 +2,7 @@ import { Article } from "@/app/models/article";
 import { fetchFilteredArticles } from "@/app/utils/loadData"
 import Card from "@/app/components/Card";
 import { Suspense } from "react";
-import Loading from "@/app/articles/loading";
+import Loading from "@/app/components/loading";
 
 
 export default async function ArticlesList({ query, currentPage }: {query: string, currentPage: number}) {
@@ -18,6 +18,7 @@ export default async function ArticlesList({ query, currentPage }: {query: strin
                         image={article.image}
                         title={article.title}
                         slug={article.slug}
+                        typeFolder="articles"
                         createDate={article.createDate}
                         description={article.description}
                         teaser={article.teaser}

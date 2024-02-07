@@ -1,3 +1,3 @@
 
 
-export const buildURL = (imagePath: string) => `https://neherconsulting.imgix.net/${imagePath}.jpg`;
+export const buildURL = (imagePath: string) => `https://neherconsulting.imgix.net/${imagePath}`;

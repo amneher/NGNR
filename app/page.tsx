@@ -7,16 +7,21 @@ import Card from "./components/Card";
 import { fetchArticlePages, getHomeArticles } from "./utils/loadData";
 import Pagination from "./components/Pagination";
 
-export default async function Home({ searchParams, }: { searchParams?: { query?: string; page?: string;}}) {
+export default async function Home({
+  searchParams,
+}: {
+  searchParams?: { query?: string; page?: string };
+}) {
   // const session = await getServerSession(authOptions);
   const homeItems: Article[] = await getHomeArticles();
 
-  const query: string = searchParams?.query || '';
+  const query: string = searchParams?.query || "";
   const currentPage: number = Number(searchParams?.page) || 1;
-  const totalPages: number = await fetchArticlePages(query)
+  const totalPages: number = await fetchArticlePages(query);
 
   return (
-    <ColumnPageContainer columns={2}>
+    <>
+      <ColumnPageContainer columns={homeItems.length > 1 ? 2 : 1}>
         {homeItems &&
           homeItems.map((item) => (
             <Card
@@ -24,6 +29,7 @@ export default async function Home({ searchParams, }: { searchParams?: { query?:
               id={item.id}
               title={item.title}
               slug={item.slug}
+              typeFolder="articles"
               image={item.image}
               createDate={item.createDate}
               description={item.description}
@@ -32,11 +38,16 @@ export default async function Home({ searchParams, }: { searchParams?: { query?:
               tagIDs={item.tagIDs}
               tags={item.tags}
               actions={["homeLimit"]}
+              authorID={item.authorID}
+              author={item.author}
             />
           ))}
-      <div className="place-self-center mt-4">
-        <Pagination totalPages={totalPages} />
-      </div>
-    </ColumnPageContainer>
+      </ColumnPageContainer>
+      {totalPages > 1 && (
+        <div className=" mt-4 max-md:hidden items-center my-8 relative flex flex-col">
+          <Pagination totalPages={totalPages} />
+        </div>
+      )}
+    </>
   );
 }

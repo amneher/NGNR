@@ -38,7 +38,7 @@ export default async function RootLayout({
   const session = await auth();
   return (
     <html data-theme="retro" lang="en" className={`${moderno.variable} ${chivoMono.variable}`}>
-      <body className={`bg-base-100 dark:bg-gradient-to-b from-neutral to-indigo-950 text-base-content dark:text-neutral-content`}>
+      <body className={`bg-gradient-to-b from-primary to-base-200 dark:bg-gradient-to-b dark:from-neutral dark:to-indigo-950 text-base-content dark:text-neutral-content min-h-screen`}>
         <NavBar session={session} />
         {children}
         <Footer />

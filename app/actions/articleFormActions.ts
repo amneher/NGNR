@@ -45,7 +45,7 @@ export async function CreateArticle(formData: FormData) {
   await prisma.article.create({
     data: {
       id: articleID,
-      image: data.image,
+      heroImage: data.image,
       title: data.title,
       slug: data.slug || data.title.toLowerCase().split(" ").join("-"),
       createDate: data.createDate,

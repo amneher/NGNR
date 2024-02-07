@@ -4,6 +4,7 @@ import { Article, Tag } from "../models/article";
 import { ContactItem, Resume, ResumeItem } from "../models/resume";
 import { Author } from "../models/author";
 import Error from "next/error";
+import { Gallery } from "../models/gallery";
 
 export async function fetchFilteredArticles(
   query: string,
@@ -98,6 +99,110 @@ export async function fetchArticlePages(query: string) {
   return pages;
 }
 
+export async function fetchFilteredGalleries(
+  query: string,
+  currentPage: number
+) {
+  noStore();
+  const perPage = 20;
+  let foundGalleries;
+  if (query === "") {
+    foundGalleries = await prisma.gallery.findMany({
+      skip: (currentPage - 1) * perPage,
+      take: 20,
+    });
+  } else {
+    foundGalleries = await prisma.gallery.findMany({
+      skip: (currentPage - 1) * perPage,
+      take: 20,
+      where: {
+        OR: [
+          {
+            id: query,
+          },
+          {
+            title: {
+              contains: query,
+            },
+          },
+          {
+            description: {
+              contains: query,
+            },
+          },
+          {
+            slug: {
+              contains: query,
+            },
+          },
+          {
+            s3folder: {
+              contains: query,
+            },
+          },
+          {
+            items: {
+              has: query,
+            },
+          },
+        ],
+      },
+    });
+  }
+  let galleries: Gallery[] = foundGalleries.map((gallery) =>
+    buildGallery(gallery)
+  );
+  return galleries;
+}
+
+export async function fetchGalleryPages(query: string) {
+  noStore();
+  const perPage = 20;
+  let allGalleries;
+  if (query === "") {
+    allGalleries = await prisma.gallery.findMany();
+  } else {
+    allGalleries = await prisma.gallery.findMany({
+      where: {
+        OR: [
+          { id: { contains: query } },
+          { slug: { contains: query } },
+          { title: { contains: query } },
+          { createDate: query },
+          { description: { contains: query } },
+          { items: { has: query } },
+          { authorID: { contains: query } },
+        ],
+      },
+    });
+  }
+  const pages = Math.ceil(allGalleries.length / perPage);
+  return pages;
+}
+
+export async function getGalleryBySlug(gallerySlug: string) {
+  noStore();
+  const result = await prisma.gallery.findFirstOrThrow({
+    where: {
+      slug: gallerySlug,
+    },
+  });
+  return buildGallery(result);
+}
+
+export async function getGalleriesByAuthor(authorId: string) {
+  noStore();
+  const items = await prisma.gallery.findMany({
+    where: {
+      authorID: authorId,
+    },
+    orderBy: {
+      createDate: "desc",
+    },
+  });
+  return items.map((item) => buildGallery(item));
+}
+
 export async function getAllArticles() {
   noStore();
   // gets all the articles, with related tags.
@@ -180,30 +285,48 @@ export async function getArticlesByTagID(tagID: string) {
   return articles;
 }
 
-export async function getAuthor(authorID:string|undefined) {
+export async function getArticlesByAuthor(authorID: string) {
   noStore();
-  const result = await prisma.author.findFirstOrThrow({
+  const items = await prisma.article.findMany({
     where: {
-      id: authorID
-    }
-  })
-  return buildAuthor(result)
+      authorID: authorID,
+    },
+    orderBy: {
+      createDate: "desc",
+    },
+  });
+  let articles: Article[] = [];
+  for (let index = 0; index < items.length; index++) {
+    const element = await buildArticle(items[index]);
+    articles.push(element);
+  }
+  return articles;
 }
 
-export async function getAuthorBySlug(authorSlug:string) {
+export async function getAuthor(authorID: string | undefined) {
   noStore();
   const result = await prisma.author.findFirstOrThrow({
     where: {
-      slug: authorSlug
-    }
-  })
-  return buildAuthor(result)
+      id: authorID,
+    },
+  });
+  return buildAuthor(result);
+}
+
+export async function getAuthorBySlug(authorSlug: string) {
+  noStore();
+  const result = await prisma.author.findFirstOrThrow({
+    where: {
+      slug: authorSlug,
+    },
+  });
+  return buildAuthor(result);
 }
 
 export async function getAllAuthors() {
   noStore();
-  const result = await prisma.author.findMany()
-  return result.map(item => buildAuthor(item))
+  const result = await prisma.author.findMany();
+  return result.map((item) => buildAuthor(item));
 }
 
 export async function getTag(id: string) {
@@ -235,24 +358,24 @@ export async function getAllResumes() {
   noStore();
   const items = await prisma.resume.findMany({
     orderBy: {
-      createDate: "desc"
-    }
-  })
-  let resumes: Resume[] = []
+      createDate: "desc",
+    },
+  });
+  let resumes: Resume[] = [];
   for (let index = 0; index < items.length; index++) {
     const element = await buildResume(items[index]);
-    resumes.push(element)
+    resumes.push(element);
   }
-  return resumes
+  return resumes;
 }
 
 export async function getCurrentResume() {
   noStore();
   const currentResume = await prisma.resume.findFirstOrThrow({
     orderBy: {
-      createDate: "desc"
-    }
-  })
+      createDate: "desc",
+    },
+  });
   const resume = await buildResume(currentResume);
   return resume;
 }
@@ -263,15 +386,15 @@ export async function getContactItems(resumeID: string) {
     where: {
       AND: [
         {
-          resumeID: resumeID
+          resumeID: resumeID,
         },
         {
-          include: true
-        }
-      ]
-    }
-  })
-  return contactItems.map(item => buildContactItem(item))
+          include: true,
+        },
+      ],
+    },
+  });
+  return contactItems.map((item) => buildContactItem(item));
 }
 
 export async function getResumeItems(resumeID: string) {
@@ -281,23 +404,23 @@ export async function getResumeItems(resumeID: string) {
     where: {
       AND: [
         {
-          include: true
+          include: true,
         },
         {
-          resumeID: resumeID
-        }
-      ]
+          resumeID: resumeID,
+        },
+      ],
     },
     orderBy: {
-      startDate: "desc"
-    }
-  })
-  return resumeItems.map(item => buildResumeItem(item))
+      startDate: "desc",
+    },
+  });
+  return resumeItems.map((item) => buildResumeItem(item));
 }
 
 const buildArticle = async (item: {
   id: string;
-  image: string | null;
+  heroImage: string | null;
   title: string;
   slug: string;
   createDate: Date;
@@ -313,10 +436,11 @@ const buildArticle = async (item: {
 
   const article: Article = {
     id: item.id,
-    image: item.image ? item.image : null,
+    heroImage: item.heroImage,
     title: item.title,
     slug: item.slug,
     createDate: item.createDate,
+    typeFolder: "articles",
     description: item.description ? item.description : null,
     teaser: item.teaser,
     content: item.content,
@@ -324,7 +448,7 @@ const buildArticle = async (item: {
     tagIDs: item.tagIDs ? item.tagIDs : [],
     tags: tags,
     author: author,
-    authorID: item.authorID
+    authorID: item.authorID,
   };
   return article;
 };
@@ -345,14 +469,14 @@ const buildTag = (item: {
 };
 
 const buildResume = async (item: {
-  id: string
-  name: string
-  createDate: Date
-  photoURL: string | null
-  intro: string | null
+  id: string;
+  name: string;
+  createDate: Date;
+  photoURL: string | null;
+  intro: string | null;
 }) => {
-  const contactItems = await getContactItems(item.id)
-  const resumeItems = await getResumeItems(item.id)
+  const contactItems = await getContactItems(item.id);
+  const resumeItems = await getResumeItems(item.id);
   const resume: Resume = {
     id: item.id,
     name: item.name,
@@ -360,35 +484,35 @@ const buildResume = async (item: {
     photoURL: item.photoURL,
     contact: contactItems,
     intro: item.intro,
-    experience: resumeItems
-  }
+    experience: resumeItems,
+  };
   return resume;
-}
+};
 
 const buildContactItem = (item: {
-  id: string
-  name: string
-  value: string
-  include: boolean
+  id: string;
+  name: string;
+  value: string;
+  include: boolean;
 }) => {
   const contactItem: ContactItem = {
     id: item.id,
     name: item.name,
     value: item.value,
-    include: item.include
-  }
+    include: item.include,
+  };
   return contactItem;
-}
+};
 
 const buildResumeItem = (item: {
-  id: string
-  include: boolean
-  title: string
-  company: string
-  startDate: Date
-  endDate: Date | null
-  description: string | null
-  items: string[]
+  id: string;
+  include: boolean;
+  title: string;
+  company: string;
+  startDate: Date;
+  endDate: Date | null;
+  description: string | null;
+  items: string[];
 }) => {
   const resumeItem: ResumeItem = {
     id: item.id,
@@ -398,22 +522,49 @@ const buildResumeItem = (item: {
     startDate: item.startDate,
     endDate: item.endDate,
     description: item.description,
-    items: item.items
-  }
+    items: item.items,
+  };
   return resumeItem;
-}
+};
 
-const buildAuthor = (item: {
-  id: string
-  slug: string
-  title: string
-  photoUrl: string | undefined
+export const buildAuthor = (item: {
+  id: string;
+  slug: string;
+  title: string;
+  photoUrl: string | undefined;
 }) => {
   const author: Author = {
     id: item.id,
     slug: item.slug,
     title: item.title,
-    photoUrl: item.photoUrl
-  }
+    photoUrl: item.photoUrl,
+  };
   return author;
-}
+};
+
+const buildGallery = (item: {
+  id: string;
+  slug: string;
+  title: string;
+  createDate: Date;
+  description: string | null;
+  s3folder: string;
+  items: string[];
+  authorID: string;
+  author: Author;
+}) => {
+  const gallery: Gallery = {
+    id: item.id,
+    slug: item.slug,
+    title: item.title,
+    heroImage: `${item.s3folder}/${item.items[0]}`,
+    typeFolder: "galleries",
+    author: item.author,
+    createDate: item.createDate,
+    description: item.description ? item.description : "",
+    authorID: item.authorID,
+    s3folder: item.s3folder,
+    items: item.items,
+  };
+  return gallery;
+};

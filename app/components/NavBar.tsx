@@ -39,12 +39,24 @@ const NavBar = ({session}: {session: Session | null}) => {
       "href": "/admin",
       "label": "admin"
     })
+  } 
+  if (!session) {
+    links.push({
+      "name": "Log In",
+      "href": "/auth/login",
+      "label": "login"
+    },
+    {
+      "name": "Register",
+      "href": "/auth/register",
+      "label": "register"
+    })
   }
 
   return (
     <div className="navbar bg-primary dark:bg-neutral text-primary-content dark:text-neutral-content md:flex gap-2 rounded-box" aria-label="navbar-container">
       <div className="navbar-start" aria-label="navbar-start">
-        <Link aria-label="homeIcon" href="/" className="max-md:hidden fill-primary-content dark:fill-neutral-content ml-2">
+        <Link aria-label="homeIcon" href="/" className="max-lg:hidden fill-primary-content dark:fill-neutral-content ml-2">
           <svg
             width="60"
             height="60"
@@ -60,8 +72,8 @@ const NavBar = ({session}: {session: Session | null}) => {
             </g>
           </svg>
         </Link>
-        <h2 className="mb-2 ml-6 text-2xl font-mono space-x-4 max-md:hidden">NGNR</h2>
-        <div className="dropdown dropdown-start md:hidden">
+        <h2 className="mb-2 ml-6 text-2xl font-mono space-x-4 max-lg:hidden">NGNR</h2>
+        <div className="dropdown dropdown-start lg:hidden">
           <div
             tabIndex={0}
             role="button"
@@ -91,20 +103,18 @@ const NavBar = ({session}: {session: Session | null}) => {
             <li>
               <Link href="/" aria-label="dropdown-home">Home</Link>
             </li>
-            <li>
-              <Link href="/articles" aria-label="dropdown-posts">Posts</Link>
-            </li>
-            <li>
-              <Link href="/resume/current" aria-label="dropdown-cv">My CV</Link>
-            </li>
-            <li>
-              <Link href="/resources" aria-label="dropdown-resources">Resources</Link>
-            </li>
+            {links.map(link => {
+              return (
+                <li key={`dropdown-${link.label}`}>
+                  <Link href={link.href} aria-label={`dropdown-${link.label}`}>{link.name}</Link>
+                </li>
+              )
+            })}
           </ul>
         </div>
       </div>
       <div className="navbar-center flex" aria-label="navbar-center">
-        <ul className="menu md:menu-horizontal md:px-2 max-md:hidden">
+        <ul className="menu lg:menu-horizontal md:px-2 max-lg:hidden">
           {links.map(link => {
             return (
               <li key={link.label}>

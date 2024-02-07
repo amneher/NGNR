@@ -2,10 +2,10 @@ import Link from "next/link";
 import React from "react";
 import ContactForm from "@/app/components/forms/ContactForm";
 
-const Footer = () => {
+export default function Footer() {
   return (
     <footer
-      className="footer flex relative p-10 bg-primary dark:bg-gradient-to-b from-indigo-950 to-neutral text-primary-content dark:text-neutral-content inset-x-0 bottom-0 place-content-center"
+      className="footer flex relative p-10 bg-gradient-to-b from-base-200 to-primary dark:bg-gradient-to-b dark:from-indigo-950 dark:to-neutral text-primary-content dark:text-neutral-content inset-x-0 bottom-0 place-content-center"
       aria-label="footer-container"
     >
       <aside aria-label="footer-branding">
@@ -35,7 +35,7 @@ const Footer = () => {
         <header className="footer-title">Consulting Services</header>
         <div className="dropdown dropdown-top">
             <div tabIndex={0} role="button" className="btn bg-accent dark:bg-neutral text-neutral dark:text-neutral-content">Contact Me</div>
-            <ul tabIndex={0} className="dropdown-content z-[1] p-4 shadow text-neutral bg-base-100 dark:text-neutral-content dark:bg-base-300 rounded-md w-72">
+            <ul tabIndex={0} className="dropdown-content z-[1] p-4 shadow text-neutral bg-primary dark:text-neutral-content dark:bg-base-300 rounded-md w-72">
                 <li>
                     <ContactForm />
                 </li>
@@ -69,5 +69,3 @@ const Footer = () => {
     </footer>
   );
 };
-
-export default Footer;

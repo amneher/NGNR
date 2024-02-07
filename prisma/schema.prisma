@@ -11,16 +11,17 @@ datasource db {
 }
 
 model Author {
-  id       String    @id @map("_id") @db.ObjectId
-  slug     String    @unique
-  title    String
-  photoUrl String
-  articles Article[] @relation
+  id        String    @id @map("_id") @db.ObjectId
+  slug      String    @unique
+  title     String
+  photoUrl  String
+  articles  Article[] @relation
+  galleries Gallery[]
 }
 
 model Article {
   id          String   @id @map("_id") @db.ObjectId
-  image       String?
+  heroImage   String?
   title       String
   slug        String   @unique
   createDate  DateTime @default(now())
@@ -30,8 +31,20 @@ model Article {
   actions     String[]
   tagIDs      String[] @db.ObjectId
   tags        Tag[]    @relation(fields: [tagIDs], references: [id])
-  authorID    String  @db.ObjectId
-  author      Author  @relation(fields: [authorID], references: [id])
+  authorID    String   @db.ObjectId
+  author      Author   @relation(fields: [authorID], references: [id])
+}
+
+model Gallery {
+  id          String   @id @map("_id") @db.ObjectId
+  slug        String   @unique
+  title       String
+  createDate  DateTime @default(now())
+  description String?
+  s3folder    String
+  items       String[]
+  authorID    String   @db.ObjectId
+  author      Author?  @relation(fields: [authorID], references: [id])
 }
 
 model Tag {

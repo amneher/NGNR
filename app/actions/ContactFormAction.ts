@@ -3,7 +3,7 @@
 import { Schema, z } from "zod";
 import { Resend } from "resend";
 
-export default async function ContactFormAction(formData: FormData) {
+export const ContactFormAction = async (formData: FormData) => {
   "use server";
 
   const schema: Schema = z.object({
@@ -36,4 +36,4 @@ export default async function ContactFormAction(formData: FormData) {
   });
 
   console.log(result);
-}
+};

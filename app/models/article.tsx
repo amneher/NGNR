@@ -2,7 +2,7 @@ import { Author } from "@/app/models/author";
 
 export interface Article {
   id: string;
-  image: string | null;
+  heroImage: string | null;
   title: string;
   slug: string;
   createDate: Date;
@@ -12,6 +12,7 @@ export interface Article {
   actions: string[] | null;
   tagIDs: string[];
   tags: Tag[] | null;
+  typeFolder: string;
   author: Author | undefined;
   authorID: string | undefined;
 }

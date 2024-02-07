@@ -42,7 +42,7 @@ const ArticlePage = async ({ slug }: { slug: string }) => {
                 <div className="flex flex-col justify-between space-y-4 pb-8 md:flex-row md:space-y-0">
                   <div className="flex items-center space-x-2 text-neutral md:space-y-0">
                     <AuthorAvatar authorSlug={article.author.slug} authorPhoto={article.author.photoUrl} authorTitle={article.author.title} />
-                    <AuthorAttribution article={article} />
+                    <AuthorAttribution authorSlug={article.author.slug} authorTitle={article.author.title} itemCreateDate={article.createDate} />
                   </div>
                   <div className="flex select-none justify-start space-x-2 md:justify-end">
                     {article.tags &&
