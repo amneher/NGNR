@@ -18,7 +18,7 @@ const ArticlePage = async ({ slug }: { slug: string }) => {
         width={1400}
         height={720}
         className="mb-5 h-[720px] w-full bg-no-repeat object-cover object-center"
-        src={`${article.image}`}
+        src={`${article.heroImage}`}
         priority
         alt={article.title}
       />

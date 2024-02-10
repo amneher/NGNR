@@ -19,100 +19,100 @@ describe('NavBar', () => {
     expect(link).toBeInTheDocument()
     expect(link.getAttribute('href')).toEqual('/')
   })
-  // it('renders a link on the dropdown-home item', () => {
-  //   render(<NavBar session={session}/>)
+  it('renders a link on the dropdown-home item', () => {
+    render(<NavBar session={session}/>)
  
-  //   const link = screen.getByLabelText('dropdown-home')
+    const link = screen.getByLabelText('dropdown-home')
     
-  //   expect(link).toBeInTheDocument()
-  //   expect(link.getAttribute('href')).toEqual('/')
-  // }),
-  // it('renders a link to articles/all on the "Posts" item', () => {
-  //   render(<NavBar session={session}/>)
+    expect(link).toBeInTheDocument()
+    expect(link.getAttribute('href')).toEqual('/')
+  }),
+  it('renders a link to articles/all on the "Posts" item', () => {
+    render(<NavBar session={session}/>)
  
-  //   const link = screen.getByLabelText('posts')
+    const link = screen.getByLabelText('posts')
     
-  //   expect(link).toBeInTheDocument()
-  //   expect(link.getAttribute('href')).toEqual('/articles')
-  // }),
-  // it('renders a link to articles/all on the "dropdown-posts" item', () => {
-  //   render(<NavBar session={session}/>)
+    expect(link).toBeInTheDocument()
+    expect(link.getAttribute('href')).toEqual('/articles')
+  }),
+  it('renders a link to articles/all on the "dropdown-posts" item', () => {
+    render(<NavBar session={session}/>)
  
-  //   const link = screen.getByLabelText('dropdown-posts')
+    const link = screen.getByLabelText('dropdown-posts')
     
-  //   expect(link).toBeInTheDocument()
-  //   expect(link.getAttribute('href')).toEqual('/articles')
-  // }),
-  // it('renders a link to /resume/current on the "My CV" item', () => {
-  //   render(<NavBar session={session}/>)
+    expect(link).toBeInTheDocument()
+    expect(link.getAttribute('href')).toEqual('/articles')
+  }),
+  it('renders a link to /resume/current on the "My CV" item', () => {
+    render(<NavBar session={session}/>)
  
-  //   const link = screen.getByLabelText('cv')
+    const link = screen.getByLabelText('cv')
     
-  //   expect(link).toBeInTheDocument()
-  //   expect(link.getAttribute('href')).toEqual('/resume/current')
-  // }),
-  // it('renders a link to /resume/current on the "dropdown-cv" item', () => {
-  //   render(<NavBar session={session}/>)
+    expect(link).toBeInTheDocument()
+    expect(link.getAttribute('href')).toEqual('/resume/current')
+  }),
+  it('renders a link to /resume/current on the "dropdown-cv" item', () => {
+    render(<NavBar session={session}/>)
  
-  //   const link = screen.getByLabelText('dropdown-cv')
+    const link = screen.getByLabelText('dropdown-cv')
     
-  //   expect(link).toBeInTheDocument()
-  //   expect(link.getAttribute('href')).toEqual('/resume/current')
-  // }),
-  // it('renders a link to /resources on the "Resources" item', () => {
-  //   render(<NavBar session={session}/>)
+    expect(link).toBeInTheDocument()
+    expect(link.getAttribute('href')).toEqual('/resume/current')
+  }),
+  it('renders a link to /resources on the "Resources" item', () => {
+    render(<NavBar session={session}/>)
  
-  //   const link = screen.getByLabelText('resources')
+    const link = screen.getByLabelText('resources')
     
-  //   expect(link).toBeInTheDocument()
-  //   expect(link.getAttribute('href')).toEqual('/resources')
-  // }),
-  // it('renders a link to /resources on the "dropdown-resources" item', () => {
-  //   render(<NavBar session={session}/>)
+    expect(link).toBeInTheDocument()
+    expect(link.getAttribute('href')).toEqual('/resources')
+  }),
+  it('renders a link to /resources on the "dropdown-resources" item', () => {
+    render(<NavBar session={session}/>)
  
-  //   const link = screen.getByLabelText('dropdown-resources')
+    const link = screen.getByLabelText('dropdown-resources')
     
-  //   expect(link).toBeInTheDocument()
-  //   expect(link.getAttribute('href')).toEqual('/resources')
-  // }),
-  // it('renders an input of type "text"', () => {
-  //   try {
-  //     render(<NavBar session={session} />)
-  //     const search_box = screen.getByRole('textbox')
-  //     expect(search_box).toBeInTheDocument()
-  //     expect(search_box.getAttribute('name')).toBe("search")
-  //   } catch {
-  //     console.log("Search component render failed.")
-  //   }
-  // }),
-  // it('renders the main navbar container', () => {
-  //   render(<NavBar session={session}/>)
+    expect(link).toBeInTheDocument()
+    expect(link.getAttribute('href')).toEqual('/resources')
+  }),
+  it('renders an input of type "text"', () => {
+    try {
+      render(<NavBar session={session} />)
+      const search_box = screen.getByRole('textbox')
+      expect(search_box).toBeInTheDocument()
+      expect(search_box.getAttribute('name')).toBe("search")
+    } catch {
+      console.log("Search component render failed.")
+    }
+  }),
+  it('renders the main navbar container', () => {
+    render(<NavBar session={session}/>)
  
-  //   const link = screen.getByLabelText('navbar-container')
+    const link = screen.getByLabelText('navbar-container')
     
-  //   expect(link).toBeInTheDocument()
-  // }),
-  // it('renders the navbar-start container', () => {
-  //   render(<NavBar session={session}/>)
+    expect(link).toBeInTheDocument()
+  }),
+  it('renders the navbar-start container', () => {
+    render(<NavBar session={session}/>)
  
-  //   const link = screen.getByLabelText('navbar-start')
+    const link = screen.getByLabelText('navbar-start')
     
-  //   expect(link).toBeInTheDocument()
-  // }),
-  // it('renders the navbar-center container', () => {
-  //   render(<NavBar session={session}/>)
+    expect(link).toBeInTheDocument()
+  }),
+  it('renders the navbar-center container', () => {
+    render(<NavBar session={session}/>)
  
-  //   const link = screen.getByLabelText('navbar-center')
+    const link = screen.getByLabelText('navbar-center')
     
-  //   expect(link).toBeInTheDocument()
-  // }),
-  // it('renders the navbar-end container', () => {
-  //   render(<NavBar session={session}/>)
+    expect(link).toBeInTheDocument()
+  }),
+  it('renders the navbar-end container', () => {
+    render(<NavBar session={session}/>)
  
-  //   const link = screen.getByLabelText('navbar-end')
+    const link = screen.getByLabelText('navbar-end')
     
-  //   expect(link).toBeInTheDocument()
-  // })
+    expect(link).toBeInTheDocument()
+  })
 })
 
 describe("Footer", () => {

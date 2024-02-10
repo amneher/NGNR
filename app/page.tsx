@@ -30,7 +30,7 @@ export default async function Home({
               title={item.title}
               slug={item.slug}
               typeFolder="articles"
-              image={item.image}
+              image={item.heroImage}
               createDate={item.createDate}
               description={item.description}
               teaser={item.teaser}

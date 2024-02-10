@@ -6,7 +6,7 @@ export default function SuggestedPostCard({ image, slug, title, typeFolder, crea
   return (
     <div className="bg-secondary mb-6 pb-2 rounded-box text-neutral dark:text-neutral-content dark:bg-neutral">
       {image && (
-        <Link href={`/articles/${slug}`}>
+        <Link href={`/${typeFolder}/${slug}`}>
           <Image
             className="mb-5 h-[240px] rounded-xl bg-no-repeat object-cover object-center transition-transform duration-200 ease-out hover:scale-[1.02]"
             src={`${image}`}

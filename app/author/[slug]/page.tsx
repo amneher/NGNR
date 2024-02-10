@@ -9,12 +9,12 @@ export default async function AuthorDetailPage({ slug }: { slug: string }) {
   const author = await getAuthorBySlug(slug);
   const authorArticles = await getArticlesByAuthor(author.id);
   const authorGalleries = await getGalleriesByAuthor(author.id);
-  let authorPosts: (Article | Gallery)[] = [];
-  for (let index = 0; index < 5; index++) {
-    authorPosts.push(authorArticles[index]);
-    authorPosts.push(authorGalleries[index]);
-  }
-
+  let authorPosts: (Article | Gallery)[] = [...authorArticles, ...authorGalleries];
+  // for (let index = 0; index < 5; index++) {
+  //   authorPosts.push(authorArticles[index]);
+  //   authorPosts.push(authorGalleries[index]);
+  // }
+  console.log(authorPosts)
   return (
     <ColumnPageContainer columns={1}>
         <h2 className={`m-2 text-2xl font-semibold`}>More About Author</h2>

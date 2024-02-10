@@ -4,6 +4,7 @@ import { Article, Tag } from "../models/article";
 import { ContactItem, Resume, ResumeItem } from "../models/resume";
 import { Author } from "../models/author";
 import { Gallery } from "../models/gallery";
+import { buildURL } from "./imgix";
 
 export async function fetchFilteredArticles(
   query: string,
@@ -565,7 +566,7 @@ const buildGallery = async (item: {
     id: item.id,
     slug: item.slug,
     title: item.title,
-    heroImage: `${item.s3folder}/${item.items[0]}`,
+    heroImage: buildURL(`${item.s3folder}/${item.items[0]}`),
     typeFolder: "galleries",
     author: author,
     createDate: item.createDate,
