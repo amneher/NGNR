@@ -22,7 +22,7 @@ export default async function GalleryList({ query, currentPage }: {query: string
                         image={buildURL(`${gallery.s3folder}/${gallery.items[0]}`)}
                         createDate={gallery.createDate}
                         description={gallery.description}
-                        teaser={gallery.description}
+                        altText={gallery.description}
                         authorID={gallery.authorID}
                     />
                 )

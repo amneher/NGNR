@@ -7,7 +7,7 @@ export interface Article {
   slug: string;
   createDate: Date;
   description: string | null;
-  teaser: string;
+  altText: string;
   content: string;
   actions: string[] | null;
   tagIDs: string[];

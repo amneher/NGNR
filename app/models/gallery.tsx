@@ -1,3 +1,4 @@
+import { Tag } from "./article";
 import { Author } from "./author";
 
 export interface Gallery {
@@ -12,4 +13,7 @@ export interface Gallery {
   typeFolder: string;
   authorID: string | undefined;
   author: Author | undefined;
+  altText: string;
+  content: string;
+  tags: Tag[]
 }

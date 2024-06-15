@@ -15,16 +15,15 @@ export default async function ArticlesList({ query, currentPage }: {query: strin
                 <div key={(article).slug}>
                     <Card
                         id={article.id}
-                        image={article.image}
+                        image={article.heroImage}
                         title={article.title}
                         slug={article.slug}
                         typeFolder="articles"
                         createDate={article.createDate}
                         description={article.description}
-                        teaser={article.teaser}
+                        altText={article.altText}
                         content={article.content}
                         actions={article.actions}
-                        tagIDs={article.tagIDs}
                         tags={article.tags}
                         authorID={article.authorID}
                         author={article.author}

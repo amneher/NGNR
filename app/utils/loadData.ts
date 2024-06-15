@@ -227,6 +227,7 @@ export async function getHomeArticles() {
   noStore();
   // gets all the articles, with related tags.
   const articleQuery = await prisma.article.findMany({
+    take: 10,
     where: {
       tags: {
         some: {
@@ -234,6 +235,9 @@ export async function getHomeArticles() {
         },
       },
     },
+    orderBy: {
+      createDate: "desc"
+    }
   });
   let articles: Article[] = [];
   for (let index = 0; index < articleQuery.length; index++) {
@@ -241,6 +245,22 @@ export async function getHomeArticles() {
     articles.push(element);
   }
   return articles;
+}
+
+export async function getHomeGalleries() {
+  noStore();
+  const galleryQuery = await prisma.gallery.findMany({
+    take: 10,
+    orderBy: {
+      createDate: "desc"
+    }
+  })
+  let galleries: Gallery[] = [];
+  for (let index = 0; index < galleryQuery.length; index++) {
+    const element = await buildGallery(galleryQuery[index]);
+    galleries.push(element);
+  }
+  return galleries;
 }
 
 export async function getArticle(slug: string) {
@@ -450,7 +470,7 @@ const buildArticle = async (item: {
     createDate: item.createDate,
     typeFolder: "articles",
     description: item.description ? item.description : null,
-    teaser: item.teaser,
+    altText: item.teaser,
     content: item.content,
     actions: item.actions ? item.actions : null,
     tagIDs: item.tagIDs ? item.tagIDs : [],
@@ -574,6 +594,9 @@ const buildGallery = async (item: {
     authorID: item.authorID,
     s3folder: item.s3folder,
     items: item.items,
+    altText: item.description ? item.description : "",
+    content: item.description ? item.description : "",
+    tags: []
   };
   return gallery;
 };

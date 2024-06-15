@@ -1,7 +1,7 @@
 import Link from "next/link";
 import React from "react";
 import { Article } from "@/app/models/article";
-import Image from "next/image";
+import Imgix from "react-imgix";
 import Tag from "@/app/components/Tag";
 import { Author } from "../models/author";
 
@@ -12,11 +12,10 @@ const Card = ({
   slug,
   typeFolder,
   description,
-  teaser,
+  altText,
   createDate,
   content,
   actions,
-  tagIDs,
   tags,
 }: {
     id: string,
@@ -25,17 +24,16 @@ const Card = ({
     slug: string,
     typeFolder: string,
     description?: string | null,
-    teaser?: string | null,
+    altText?: string | null,
     createDate: Date,
     content?: string | null,
     actions?: string[] | null,
-    tagIDs?: string[] | null,
     tags?: any[] | null,
     author?: Author | null,
     authorID?: string | null
 }) => {
-  const default_width = "800";
-  const default_height = "800";
+  const default_width = 800;
+  const default_height = 800;
 
   let contentTrunc = false;
   if (actions && actions.find((x) => x === "homeLimit")) {
@@ -51,13 +49,12 @@ const Card = ({
       <Link href={`/${typeFolder}/${slug}`} aria-label={`main-${id}-link`}>
         {image ? (
           <figure>
-            <Image
+            <Imgix
               src={image}
-              alt="Album"
-              width={default_width}
-              height={default_height}
+              sizes="80vw"
               className="rounded-box w-full"
               aria-label={`image-${id}`}
+              imgixParams={{ ar: "4:5", fit: "crop" }}
             />
           </figure>
         ) : (
@@ -65,12 +62,14 @@ const Card = ({
         )}
       </Link>
       <div className="card-body" aria-label={`body-${id}`}>
+      <Link href={`/${typeFolder}/${slug}`} aria-label={`main-${id}-link`}>
         <h2
           className="card-title font-semibold justify-center text-neutral dark:text-neutral-content"
           aria-label={`title-${id}`}
         >
           {title}
         </h2>
+        </Link>
         {description ? (
           <h3 className="opacity-50 font-mono" aria-label={`description-${id}`}>
             {description}
@@ -83,8 +82,8 @@ const Card = ({
         </h3>
         <div className="divider"></div>
         {contentTrunc ? (
-          <p aria-label={`teaser-${id}`} className="font-mono">
-            {teaser}
+          <p aria-label={`altText-${id}`} className="font-mono">
+            {altText}
           </p>
         ) : (
           <p aria-label={`content-${id}`} className="font-mono">

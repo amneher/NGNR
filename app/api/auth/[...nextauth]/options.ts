@@ -6,7 +6,7 @@ import prisma from "@/app/utils/db";
 
 export const options: NextAuthOptions = {
   adapter: PrismaAdapter(prisma),
-  session: { strategy: "database" },
+  session: { strategy: "jwt" },
   providers: [
     Github({
       clientId: process.env.NGNR_GITHUB_ID as string,

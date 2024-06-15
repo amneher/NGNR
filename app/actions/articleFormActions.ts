@@ -5,12 +5,13 @@ import prisma from "@/app/utils/db";
 import { z } from "zod";
 import { redirect } from "next/navigation";
 import { getArticle, getAuthorBySlug } from "@/app/utils/loadData";
+import { buildURL } from "@/app/utils/imgix";
 import { Article, Tag } from "@/app/models/article";
-import { Author } from "../models/author";
+import { Author } from "@/app/models/author";
 
 export async function CreateArticle(formData: FormData) {
   const schema = z.object({
-    image: z.string().optional(),
+    image: z.string(),
     title: z.string().min(1),
     slug: z.string().optional(),
     author: z.string(),
